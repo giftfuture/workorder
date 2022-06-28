@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xbhy.workorder.dao.OrderSortDao">
+
+    <resultMap id="BaseResultMap" type="com.xbhy.workorder.entity.OrderSort">
+        <!--@Table order_sort-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="sortName" column="sort_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
+        <result property="sortTag" column="sort_tag" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, sort_name, create_time, deleted, sort_tag, create_by, update_by, update_time
+        from order_sort
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, sort_name, create_time, deleted, sort_tag, create_by, update_by, update_time
+        from order_sort
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="sortName != null and sortName != ''">
+                and sort_name = #{sortName}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="sortTag != null and sortTag != ''">
+                and sort_tag = #{sortTag}
+            </if>
+            <if test="createBy != null">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateBy != null">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, sort_name, create_time, deleted, sort_tag, create_by, update_by, update_time
+        from work_order.order_sort
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from order_sort
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="sortName != null and sortName != ''">
+                and sort_name = #{sortName}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="sortTag != null and sortTag != ''">
+                and sort_tag = #{sortTag}
+            </if>
+            <if test="createBy != null">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateBy != null">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into order_sort(sort_name, create_time, deleted, sort_tag, create_by, update_by, update_time)
+        values (#{sortName}, #{createTime}, #{deleted}, #{sortTag}, #{createBy}, #{updateBy}, #{updateTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into order_sort(sort_name, create_time, deleted, sort_tag, create_by, update_by, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.sortName}, #{entity.createTime}, #{entity.deleted}, #{entity.sortTag}, #{entity.createBy}, #{entity.updateBy}, #{entity.updateTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into order_sort(sort_name, create_time, deleted, sort_tag, create_by, update_by, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.sortName}, #{entity.createTime}, #{entity.deleted}, #{entity.sortTag}, #{entity.createBy}, #{entity.updateBy}, #{entity.updateTime})
+        </foreach>
+        on duplicate key update
+        sort_name = values(sort_name),
+        create_time = values(create_time),
+        deleted = values(deleted),
+        sort_tag = values(sort_tag),
+        create_by = values(create_by),
+        update_by = values(update_by),
+        update_time = values(update_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update order_sort
+        <set>
+            <if test="sortName != null and sortName != ''">
+                sort_name = #{sortName},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="sortTag != null and sortTag != ''">
+                sort_tag = #{sortTag},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        update order_sort set deleted =1 where id = #{id}
+    </delete>
+
+</mapper>
+
