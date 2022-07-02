@@ -46,7 +46,6 @@ public class SysPasswordService {
 
     public void validate(StaffVO user, String password, String verificationCode) {
         String loginName = user.getLoginName();
-
         AtomicInteger retryCount = loginRecordCache.get(loginName);
 
         if (retryCount == null) {

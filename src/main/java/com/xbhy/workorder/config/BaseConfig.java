@@ -21,6 +21,8 @@ public class BaseConfig {
 
     public static String jcaptchaError;
 
+    public static String historyFilePath;
+
     @Value("${attachUrl}")
     public static void setAttachUrl(String attachUrl) {
         BaseConfig.attachUrl = attachUrl;
@@ -29,6 +31,8 @@ public class BaseConfig {
     public void setJcaptchaError(String jcaptchaError) {
         BaseConfig.jcaptchaError = jcaptchaError;
     }
-
-
+    @Value("${record.file.path}")
+    public void setHistoryFilePath(String historyFilePath) {
+        BaseConfig.historyFilePath = historyFilePath;
+    }
 }
