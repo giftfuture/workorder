@@ -1,12 +1,13 @@
 package com.xbhy.workorder.shiro.web.session;
 
-import com.ycp.web.code.model.constant.ShiroConstants;
-import com.ycp.web.code.model.entity.SysUserOnline;
-import com.ycp.web.code.service.ISysUserOnlineService;
-import com.ycp.web.shiro.session.OnlineSession;
-import com.ycp.web.utils.StringUtils;
-import com.ycp.web.utils.bean.BeanUtils;
-import com.ycp.web.utils.spring.SpringUtils;
+
+import com.xbhy.workorder.constant.ShiroConstants;
+import com.xbhy.workorder.entity.StaffSession;
+import com.xbhy.workorder.service.StaffSessionService;
+import com.xbhy.workorder.shiro.session.OnlineSession;
+import com.xbhy.workorder.util.BeanUtils;
+import com.xbhy.workorder.util.SpringUtils;
+import com.xbhy.workorder.vo.StaffSessionVO;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.session.ExpiredSessionException;
 import org.apache.shiro.session.InvalidSessionException;
@@ -17,15 +18,12 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 主要是在此如果会话的属性修改了 就标识下其修改了 然后方便 OnlineSessionDao同步
  * 
- * @author ycp
+ * @author
  */
 public class OnlineWebSessionManager extends DefaultWebSessionManager
 {
@@ -82,7 +80,7 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager
     {
         OnlineSession session = null;
         Object obj = doGetSession(sessionKey);
-        if (StringUtils.isNotNull(obj))
+        if (Optional.ofNullable(obj).isPresent())
         {
             session = new OnlineSession();
             BeanUtils.copyBeanProp(session, obj);
@@ -105,11 +103,11 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager
 
         int timeout = (int) this.getGlobalSessionTimeout();
         Date expiredDate = DateUtils.addMilliseconds(new Date(), 0 - timeout);
-        ISysUserOnlineService userOnlineService = SpringUtils.getBean(ISysUserOnlineService.class);
-        List<SysUserOnline> userOnlineList = userOnlineService.selectOnlineByExpired(expiredDate);
+        StaffSessionService staffSessionService = SpringUtils.getBean(StaffSessionService.class);
+        List<StaffSessionVO> userOnlineList = staffSessionService.selectOnlineByExpired(expiredDate);
         // 批量过期删除
         List<String> needOfflineIdList = new ArrayList<String>();
-        for (SysUserOnline userOnline : userOnlineList)
+        for (StaffSessionVO userOnline : userOnlineList)
         {
             try
             {
@@ -138,7 +136,7 @@ public class OnlineWebSessionManager extends DefaultWebSessionManager
         {
             try
             {
-                userOnlineService.batchDeleteOnline(needOfflineIdList);
+                staffSessionService.batchDeleteOnline(needOfflineIdList);
             }
             catch (Exception e)
             {

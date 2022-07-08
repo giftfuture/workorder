@@ -1,6 +1,10 @@
 package com.xbhy.workorder.shiro.session;
 
 import com.xbhy.workorder.component.AsyncManager;
+import com.xbhy.workorder.enums.OnlineStatus;
+import com.xbhy.workorder.schedule.factory.AsyncFactory;
+import com.xbhy.workorder.shiro.service.SysShiroService;
+import com.xbhy.workorder.vo.StaffSessionVO;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
@@ -50,7 +54,7 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO
     @Override
     protected Session doReadSession(Serializable sessionId)
     {
-        return sysShiroService.getSession(sessionId);
+        return sysShiroService.getSession(String.valueOf(sessionId));
     }
 
     @Override
@@ -75,7 +79,7 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO
                 needSync = false;
             }
             // isGuest = true 访客
-            boolean isGuest = onlineSession.getUserId() == null || onlineSession.getUserId() == 0L;
+            boolean isGuest = onlineSession.getStaffId() == null || onlineSession.getStaffId() == 0L;
 
             // session 数据变更了 同步
             if (isGuest == false && onlineSession.isAttributeChanged())
@@ -104,12 +108,12 @@ public class OnlineSessionDAO extends EnterpriseCacheSessionDAO
     @Override
     protected void doDelete(Session session)
     {
-        OnlineSession onlineSession = (OnlineSession) session;
+        StaffSessionVO onlineSession = (StaffSessionVO) session;
         if (null == onlineSession)
         {
             return;
         }
-        onlineSession.setStatus(OnlineStatus.off_line);
+        onlineSession.setOnlineStatus(OnlineStatus.off_line.getCode());
         sysShiroService.deleteSession(onlineSession);
     }
 }

@@ -1,16 +1,18 @@
 package com.xbhy.workorder.exception.user;
 
+import com.xbhy.workorder.config.BaseConfig;
+
 /**
- * 用户密码不正确或不符合规范异常类
+ * 验证码错误
  * 
  * @author
  */
-public class UseVerificationcodeNotMatchException extends UserException
+public class UseVerificationcodeNotMatchException extends StaffException
 {
     private static final long serialVersionUID = 1L;
 
     public UseVerificationcodeNotMatchException()
     {
-        super("user.verificationCode.not.match", null);
+        super(6, BaseConfig.getJcaptchaError());
     }
 }

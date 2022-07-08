@@ -1,7 +1,7 @@
 package com.xbhy.workorder.shiro.session;
 
-import com.ycp.web.utils.IpUtils;
-import com.ycp.web.utils.ServletUtils;
+import com.xbhy.workorder.util.IpUtils;
+import com.xbhy.workorder.util.ServletUtils;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionContext;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 自定义sessionFactory会话
  * 
- * @author ycp
+ * @author
  */
 @Component
 public class OnlineSessionFactory implements SessionFactory
@@ -34,7 +34,7 @@ public class OnlineSessionFactory implements SessionFactory
                 String os = userAgent.getOperatingSystem().getName();
                 // 获取客户端浏览器
                 String browser = userAgent.getBrowser().getName();
-                session.setHost(IpUtils.getIpAddr(request));
+                session.setHost(IpUtils.getIpAddress(request));
                 session.setBrowser(browser);
                 session.setOs(os);
             }

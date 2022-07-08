@@ -1,6 +1,6 @@
 package com.xbhy.workorder.shiro.web.session;
 
-import com.ycp.web.utils.Threads;
+import com.xbhy.workorder.component.Threads;
 import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.ValidatingSessionManager;

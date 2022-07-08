@@ -1,8 +1,11 @@
 package com.xbhy.workorder.service;
 
 import com.xbhy.workorder.entity.OrderLog;
+import com.xbhy.workorder.vo.OrderLogVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (OrderLog)表服务接口
@@ -18,32 +21,39 @@ public interface OrderLogService {
      * @param id 主键
      * @return 实例对象
      */
-    OrderLog queryById(Long id);
+    OrderLogVO queryById(Long id);
+
+    /**
+     * 工单操作
+     * @param orderId
+     * @return
+     */
+    List<OrderLogVO> queryByOrderId(Long orderId);
 
     /**
      * 分页查询
      *
-     * @param orderLog 筛选条件
+     * @param orderLogVO 筛选条件
      * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<OrderLog> queryByPage(OrderLog orderLog, PageRequest pageRequest);
+    Page<OrderLogVO> queryByPage(OrderLogVO orderLogVO, PageRequest pageRequest);
 
     /**
      * 新增数据
      *
-     * @param orderLog 实例对象
+     * @param orderLogVO 实例对象
      * @return 实例对象
      */
-    OrderLog insert(OrderLog orderLog);
+    OrderLogVO insert(OrderLogVO orderLogVO);
 
     /**
      * 修改数据
      *
-     * @param orderLog 实例对象
+     * @param orderLogVO 实例对象
      * @return 实例对象
      */
-    OrderLog update(OrderLog orderLog);
+    OrderLogVO update(OrderLogVO orderLogVO);
 
     /**
      * 通过主键删除数据

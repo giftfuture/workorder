@@ -3,7 +3,9 @@ package com.xbhy.workorder.vo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,11 +13,13 @@ import java.util.Date;
 /**
  * (OrderDict)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:31
  */
 @Data
+@SuperBuilder(toBuilder = true)
 @ToString
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel(value = "工单状态字典",description = "工单状态字典")
 public class OrderDictVO implements Serializable {
@@ -26,6 +30,10 @@ public class OrderDictVO implements Serializable {
      * 工单组别
      */
     private Long orderSortId;
+    /**
+     * 工单组别标签
+     */
+    private String sortTag;
     /**
      * 状态枚举
      */
@@ -55,6 +63,13 @@ public class OrderDictVO implements Serializable {
      */
     private Date updateTime;
 
+    public String getSortTag() {
+        return sortTag;
+    }
+
+    public void setSortTag(String sortTag) {
+        this.sortTag = sortTag;
+    }
 
     public Long getId() {
         return id;

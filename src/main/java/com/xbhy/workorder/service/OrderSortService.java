@@ -1,8 +1,11 @@
 package com.xbhy.workorder.service;
 
 import com.xbhy.workorder.entity.OrderSort;
+import com.xbhy.workorder.vo.OrderSortVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (OrderSort)表服务接口
@@ -18,32 +21,37 @@ public interface OrderSortService {
      * @param id 主键
      * @return 实例对象
      */
-    OrderSort queryById(Long id);
+    OrderSortVO queryById(Long id);
 
     /**
      * 分页查询
      *
-     * @param orderSort   筛选条件
+     * @param orderSortVO   筛选条件
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    Page<OrderSort> queryByPage(OrderSort orderSort, PageRequest pageRequest);
+    Page<OrderSortVO> queryByPage(OrderSortVO orderSortVO, PageRequest pageRequest);
 
+    /**
+     * 获取所有工单类别
+     * @return
+     */
+    List<OrderSortVO> fetchAll();
     /**
      * 新增数据
      *
-     * @param orderSort 实例对象
+     * @param orderSortVO 实例对象
      * @return 实例对象
      */
-    OrderSort insert(OrderSort orderSort);
+    OrderSortVO insert(OrderSortVO orderSortVO);
 
     /**
      * 修改数据
      *
-     * @param orderSort 实例对象
+     * @param orderSortVO 实例对象
      * @return 实例对象
      */
-    OrderSort update(OrderSort orderSort);
+    OrderSortVO update(OrderSortVO orderSortVO);
 
     /**
      * 通过主键删除数据

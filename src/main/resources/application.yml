@@ -113,8 +113,26 @@ shiro:
     # 踢出之前登录的/之后登录的用户，默认踢出之前登录的用户
     kickoutAfter: false
 
+http:
+  encoding:
+    charset: utf-8
+    enabled: true
 
-
-user:
+staff:
+  loginNameIndex: "该登录名用户已存在"
+  mobileIndex: "手机号已存在"
+  emailIndex: "邮箱已存在"
+  staffNoIndex: "员工号已存在"
+  updatePwdSuccess: "密码修改成功！"
+  updatePwdFailed: "密码修改异常！"
+  resetPwdSuccess: "密码重置成功！"
+  resetPwdFailed: "密码重置异常！"
+  confirmEqualPwd : "新密码与确认密码必须相同！"
+  notEqualOldPwd: "修改新密码不能与旧密码相同！"
+  updateStaffFailed: "用户信息更新失败！"
+  loginNameNoExist: "该登录名用户不存在！"
+  loginNamePwdNotMatch: "用户名和密码不匹配！"
+  retryLimitCount: "登录超过最大输入次数！"
+  inValidVerifyCode: "验证码不正确！"
   jcaptcha:
     error: "验证码错误"

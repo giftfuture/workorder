@@ -3,19 +3,24 @@ package com.xbhy.workorder.vo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * (OrderInfo)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:33
  */
 @Data
+@SuperBuilder(toBuilder = true)
 @ToString
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel(value = "工单信息",description = "工单信息")
 public class OrderInfoVO implements Serializable {
@@ -29,13 +34,32 @@ public class OrderInfoVO implements Serializable {
      */
     private String orderNo;
     /**
+     * 不够完整位数的工单号(用于模糊搜索)
+     */
+    private String orderNoPrefix;
+    /**
      * 标签(公共颜色:1,个人颜色:2)
      */
     private String orderTag;
+
+    /**
+     * 搜索框内容
+     */
+    private String searchContent;
     /**
      * 工单内容文本
      */
     private String content;
+
+    /**
+     * 文本关键字列表
+     */
+    private List<List<String>> contentList;
+
+    /**
+     * 备注关键字列表
+     */
+    private List<List<String>> remarkList;
     /**
      * 发货文本
      */
@@ -60,6 +84,15 @@ public class OrderInfoVO implements Serializable {
      * 创建时间 
      */
     private Date createTime;
+
+    /**
+     * 创建时间开始(用于检索)
+     */
+    private Date createTimeBegin;
+    /**
+     * 创建时间结束(用于检索)
+     */
+    private Date createTimeEnd;
     /**
      * 对账备注
      */
@@ -84,6 +117,10 @@ public class OrderInfoVO implements Serializable {
      * 创建者
      */
     private Long createBy;
+    /**
+     *创建人(检索用)
+     */
+    private String creators;
     /**
      * 更新者
      */

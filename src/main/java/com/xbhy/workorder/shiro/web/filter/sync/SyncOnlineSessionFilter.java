@@ -1,8 +1,8 @@
 package com.xbhy.workorder.shiro.web.filter.sync;
 
-import com.ycp.web.code.model.constant.ShiroConstants;
-import com.ycp.web.shiro.session.OnlineSession;
-import com.ycp.web.shiro.session.OnlineSessionDAO;
+import com.xbhy.workorder.constant.ShiroConstants;
+import com.xbhy.workorder.shiro.session.OnlineSession;
+import com.xbhy.workorder.shiro.session.OnlineSessionDAO;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 /**
  * 同步Session数据到Db
  * 
- * @author ycp
+ * @author
  */
 public class SyncOnlineSessionFilter extends PathMatchingFilter
 {
@@ -28,7 +28,7 @@ public class SyncOnlineSessionFilter extends PathMatchingFilter
         OnlineSession session = (OnlineSession) request.getAttribute(ShiroConstants.ONLINE_SESSION);
         // 如果session stop了 也不同步
         // session停止时间，如果stopTimestamp不为null，则代表已停止
-        if (session != null && session.getUserId() != null && session.getStopTimestamp() == null)
+        if (session != null && session.getStaffId() != null && session.getStopTimestamp() == null)
         {
             onlineSessionDAO.syncToDb(session);
         }

@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * (OrderLog)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:34
  */
 @Data

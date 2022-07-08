@@ -7,11 +7,11 @@ import com.xbhy.workorder.config.BaseConfig;
  * 
  * @author
  */
-public class CaptchaException extends UserException
+public class CaptchaException extends StaffException
 {
     private static final long serialVersionUID = 1L;
 
     public CaptchaException(){
-        super("staff", 1, BaseConfig.jcaptchaError);
+        super(1, BaseConfig.getJcaptchaError());
     }
 }

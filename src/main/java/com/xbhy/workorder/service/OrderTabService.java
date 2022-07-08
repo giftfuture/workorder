@@ -1,8 +1,12 @@
 package com.xbhy.workorder.service;
 
 import com.xbhy.workorder.entity.OrderTab;
+import com.xbhy.workorder.vo.OrderSortVO;
+import com.xbhy.workorder.vo.OrderTabVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (OrderTab)表服务接口
@@ -18,32 +22,36 @@ public interface OrderTabService {
      * @param id 主键
      * @return 实例对象
      */
-    OrderTab queryById(Long id);
-
+    OrderTabVO queryById(Long id);
+    /**
+     * 获取所有选项卡
+     * @return
+     */
+    List<OrderTabVO> fetchAll();
     /**
      * 分页查询
      *
-     * @param orderTab    筛选条件
+     * @param orderTabVO    筛选条件
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    Page<OrderTab> queryByPage(OrderTab orderTab, PageRequest pageRequest);
+    Page<OrderTabVO> queryByPage(OrderTabVO orderTabVO, PageRequest pageRequest);
 
     /**
      * 新增数据
      *
-     * @param orderTab 实例对象
+     * @param orderTabVO 实例对象
      * @return 实例对象
      */
-    OrderTab insert(OrderTab orderTab);
+    OrderTabVO insert(OrderTabVO orderTabVO);
 
     /**
      * 修改数据
      *
-     * @param orderTab 实例对象
+     * @param orderTabVO 实例对象
      * @return 实例对象
      */
-    OrderTab update(OrderTab orderTab);
+    OrderTabVO update(OrderTabVO orderTabVO);
 
     /**
      * 通过主键删除数据

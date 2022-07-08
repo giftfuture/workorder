@@ -1,9 +1,9 @@
 package com.xbhy.workorder.shiro.service;
 
 
+import com.xbhy.workorder.service.StaffSessionService;
 import com.xbhy.workorder.shiro.session.OnlineSession;
-import com.xbhy.workorder.vo.SysUserOnline;
-import org.apache.commons.lang3.StringUtils;
+import com.xbhy.workorder.vo.StaffSessionVO;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,22 +14,22 @@ import java.util.Optional;
 /**
  * 会话db操作处理
  * 
- * @author ycp
+ * @author
  */
 @Component
 public class SysShiroService
 {
     @Autowired
-    private ISysUserOnlineService sysUserOnlineService;
+    private StaffSessionService staffSessionService;
 
     /**
      * 删除会话
      *
-     * @param onlineSession 会话信息
+     * @param staffSessionVO 会话信息
      */
-    public void deleteSession(OnlineSession onlineSession)
+    public void deleteSession(StaffSessionVO staffSessionVO)
     {
-        sysUserOnlineService.deleteOnlineById(String.valueOf(onlineSession.getId()));
+        staffSessionService.deleteById(staffSessionVO.getId());
     }
 
     /**
@@ -38,22 +38,20 @@ public class SysShiroService
      * @param sessionId
      * @return
      */
-    public Session getSession(Serializable sessionId)
+    public Session getSession(String sessionId)
     {
-        SysUserOnline userOnline = sysUserOnlineService.selectOnlineById(String.valueOf(sessionId));
+        StaffSessionVO userOnline = staffSessionService.queryBySessionId(sessionId);
         return Optional.ofNullable(userOnline).isPresent() ? null : createSession(userOnline);
     }
 
-    public Session createSession(SysUserOnline userOnline)
+    public Session createSession(StaffSessionVO userOnline)
     {
         OnlineSession onlineSession = new OnlineSession();
         if (Optional.ofNullable(userOnline).isPresent())
         {
             onlineSession.setId(userOnline.getSessionId());
-            onlineSession.setHost(userOnline.getIpaddr());
             onlineSession.setBrowser(userOnline.getBrowser());
             onlineSession.setOs(userOnline.getOs());
-            onlineSession.setDeptName(userOnline.getDeptName());
             onlineSession.setLoginName(userOnline.getLoginName());
             onlineSession.setStartTimestamp(userOnline.getStartTimestamp());
             onlineSession.setLastAccessTime(userOnline.getLastAccessTime());

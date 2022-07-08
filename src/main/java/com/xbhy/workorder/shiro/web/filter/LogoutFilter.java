@@ -1,6 +1,12 @@
 package com.xbhy.workorder.shiro.web.filter;
 
 
+import com.xbhy.workorder.component.AsyncManager;
+import com.xbhy.workorder.constant.ShiroConstants;
+import com.xbhy.workorder.util.MessageUtils;
+import com.xbhy.workorder.util.ShiroUtils;
+import com.xbhy.workorder.vo.StaffVO;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.SessionException;
@@ -12,11 +18,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.Serializable;
 import java.util.Deque;
+import java.util.Optional;
 
 /**
  * 退出过滤器
  * 
- * @author ycp
+ * @author
  */
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 {
@@ -48,12 +55,12 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
             String redirectUrl = getRedirectUrl(request, response, subject);
             try
             {
-                SysUser user = ShiroUtils.getSysUser();
-                if (StringUtils.isNotNull(user))
+                StaffVO staff = ShiroUtils.getStaff();
+                if (Optional.ofNullable(staff).isPresent())
                 {
-                    String loginName = user.getLoginName();
+                    String loginName = staff.getLoginName();
                     // 记录用户退出日志
-                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success")));
+                    //AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success")));
                     // 清理缓存
                     cache.remove(loginName);
                 }

@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 角色信息表(SysRole)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:45
  */
 @Data

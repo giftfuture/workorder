@@ -1,9 +1,8 @@
 package com.xbhy.workorder.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -13,9 +12,10 @@ import java.util.List;
  * @author zz_dxm
  */
 @Data
-@Builder
+@SuperBuilder(toBuilder = true)
+@ToString
 @NoArgsConstructor
-@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OmegaSearchItem {
     private String code;
     private List<String> desc;

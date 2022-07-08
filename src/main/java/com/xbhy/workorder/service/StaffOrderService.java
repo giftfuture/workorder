@@ -1,6 +1,7 @@
 package com.xbhy.workorder.service;
 
 import com.xbhy.workorder.entity.StaffOrder;
+import com.xbhy.workorder.vo.StaffOrderVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -18,24 +19,24 @@ public interface StaffOrderService {
      * @param id 主键
      * @return 实例对象
      */
-    StaffOrder queryById(Long id);
+    StaffOrderVO queryById(Long id);
 
     /**
      * 分页查询
      *
-     * @param staffOrder  筛选条件
+     * @param staffOrderVO  筛选条件
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    Page<StaffOrder> queryByPage(StaffOrder staffOrder, PageRequest pageRequest);
+    Page<StaffOrderVO> queryByPage(StaffOrderVO staffOrderVO, PageRequest pageRequest);
 
     /**
      * 新增数据
      *
-     * @param staffOrder 实例对象
+     * @param staffOrderVO 实例对象
      * @return 实例对象
      */
-    StaffOrder insert(StaffOrder staffOrder);
+    StaffOrderVO insert(StaffOrderVO staffOrderVO);
 
     /**
      * 修改数据
@@ -43,7 +44,7 @@ public interface StaffOrderService {
      * @param staffOrder 实例对象
      * @return 实例对象
      */
-    StaffOrder update(StaffOrder staffOrder);
+    StaffOrderVO update(StaffOrderVO staffOrderVO);
 
     /**
      * 通过主键删除数据

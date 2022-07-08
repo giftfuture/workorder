@@ -1,8 +1,10 @@
 package com.xbhy.workorder.vo;
 
-import com.ycp.web.utils.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * 操作消息提醒
@@ -76,7 +78,7 @@ public class AjaxResult extends HashMap<String, Object>
     {
         super.put(CODE_TAG, type.value);
         super.put(MSG_TAG, msg);
-        if (StringUtils.isNotNull(data))
+        if (Optional.ofNullable(data).isPresent())
         {
             super.put(DATA_TAG, data);
         }

@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 用户和角色关联表(StaffRole)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:43
  */
 @Data

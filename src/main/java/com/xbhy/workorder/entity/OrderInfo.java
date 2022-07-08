@@ -7,11 +7,13 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * (OrderInfo)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:33
  */
 @Data
@@ -28,6 +30,30 @@ public class OrderInfo implements Serializable {
      * 工单号
      */
     private String orderNo;
+    /**
+     * 不够完整位数的工单号(用于模糊搜索)
+     */
+    private transient String orderNoPrefix;
+
+    /**
+     * 文本关键字列表
+     */
+    private transient List<List<String>> contentList;
+
+    /**
+     * 备注关键字列表
+     */
+    private transient List<List<String>> remarkList;
+
+    /**
+     *
+     */
+    private transient Map<String,String>  contentRemarkCondtion;
+
+    /**
+     * 开票与资料文本框关键字
+     */
+    private transient List<String> kpContextList;
     /**
      * 标签(公共颜色:1,个人颜色:2)
      */
@@ -60,6 +86,20 @@ public class OrderInfo implements Serializable {
      * 创建时间 
      */
     private Date createTime;
+
+    /**
+     * 创建时间开始(用于检索)
+     */
+    private transient Date createTimeBegin;
+    /**
+     * 创建时间结束(用于检索)
+     */
+    private transient Date createTimeEnd;
+
+    /**
+     * 创建人(检索用)
+     */
+    private transient String creators;
     /**
      * 对账备注
      */

@@ -1,16 +1,21 @@
 package com.xbhy.workorder.dao;
 
 import com.xbhy.workorder.entity.OrderInfo;
+import com.xbhy.workorder.vo.OrderInfoVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
  * (OrderInfo)表数据库访问层
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:32
  */
+@Mapper
 public interface OrderInfoDao {
 
     /**
@@ -29,6 +34,15 @@ public interface OrderInfoDao {
      * @return 对象列表
      */
     List<OrderInfo> queryAllByLimit(OrderInfo orderInfo, @Param("pageable") Pageable pageable);
+
+
+    /**
+     * 综合搜索
+     * @param orderInfo
+     * @param pageable
+     * @return
+     */
+    Page<OrderInfoVO> overallSearch(OrderInfo orderInfo, @Param("pageable") Pageable pageable);
 
     /**
      * 统计总行数

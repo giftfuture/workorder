@@ -7,11 +7,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 角色信息表(SysRole)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:45
  */
 @Data
@@ -57,6 +58,7 @@ public class SysRole implements Serializable {
      */
     private Date updateTime;
 
+    private transient List<SysPermission> sysPermissionList;
 
     public Integer getRoleId() {
         return roleId;
@@ -130,5 +132,13 @@ public class SysRole implements Serializable {
         this.updateTime = updateTime;
     }
 
+
+    public List<SysPermission> getSysPermissionList() {
+        return sysPermissionList;
+    }
+
+    public void setSysPermissionList(List<SysPermission> sysPermissionList) {
+        this.sysPermissionList = sysPermissionList;
+    }
 }
 

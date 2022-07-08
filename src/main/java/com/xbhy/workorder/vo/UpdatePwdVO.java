@@ -14,10 +14,10 @@ import javax.validation.constraints.NotNull;
 @ToString
 @ApiModel(value = "更新密码",description = "更新密码")
 public class UpdatePwdVO {
-    //主键
-    @NotNull(message = "用户ID不可为空")
-    @ApiModelProperty(value="用户ID",name="id",required=true)
-    private Long id;
+
+    @NotBlank(message = "登录名不可为空")
+    @ApiModelProperty(value="登录名",name="loginName",required=true)
+    private String loginName;
     //密码,L:50
     @NotBlank(message = "原密码不可为空")
     @ApiModelProperty(value="密码",name="paswd",required=true)

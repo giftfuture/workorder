@@ -1,17 +1,27 @@
 package com.xbhy.workorder.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.xbhy.workorder.entity.SysRole;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * (Staff)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 11:20:18
  */
 @Data
+@SuperBuilder(toBuilder = true)
+@ToString
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class StaffVO implements Serializable {
     private static final long serialVersionUID = 779443444370459476L;
     
@@ -86,6 +96,8 @@ public class StaffVO implements Serializable {
      * 最近登录时间
      */
     private Date loginTime;
+
+    private List<SysRole> sysRoleList;
 
 
     public Long getId() {
@@ -240,5 +252,12 @@ public class StaffVO implements Serializable {
         this.loginTime = loginTime;
     }
 
+    public List<SysRole> getSysRoleList() {
+        return sysRoleList;
+    }
+
+    public void setSysRoleList(List<SysRole> sysRoleList) {
+        this.sysRoleList = sysRoleList;
+    }
 }
 

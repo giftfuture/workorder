@@ -2,10 +2,8 @@ package com.xbhy.workorder.shiro.web.filter.pre;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ycp.web.config.PhConfiguration;
-import com.ycp.web.exception.BusinessException;
-import com.ycp.web.utils.StreamUtil;
-import com.ycp.web.utils.security.MD5Util;
+import com.xbhy.workorder.util.StreamUtil;
+import com.xbhy.workorder.util.md5.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +16,21 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.BindException;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Vector;
 
 /**
- * Created by admin on 2018/11/12.
+ *
  */
 @Component
 @Order(100)
 public class RequestPrefixFilter implements Filter {
     private static Logger log = LoggerFactory.getLogger(RequestPrefixFilter.class);
 
-    @Autowired
-    private PhConfiguration phConfiguration;
+
 
 
     @Override
@@ -75,10 +73,10 @@ public class RequestPrefixFilter implements Filter {
             if (source != null && source.equals("10")) {
                 //判断加密
                 //token=  MD5(appid  +  MD5 (time  + UpperCase(methodName)) + appid)
-                String contrast = MD5Util.getMD5(phConfiguration.getAppIdPhhyy() + MD5Util.getMD5(timeStamp + methodName.toUpperCase()) + phConfiguration.getAppIdPhhyy());
+                String contrast = MD5Util.getMD5( MD5Util.getMD5(timeStamp + methodName.toUpperCase()) );
                 if (!pcToken.equals(contrast)) {
                     log.debug("token有问题");
-                    throw new BusinessException("token异常！");
+                    throw new BindException("token异常！");
                 }
                 BasicBodyRequestWrapper wrapper = new BasicBodyRequestWrapper(request, parameters);
                 request = wrapper;

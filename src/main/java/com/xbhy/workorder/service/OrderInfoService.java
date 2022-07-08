@@ -1,6 +1,7 @@
 package com.xbhy.workorder.service;
 
 import com.xbhy.workorder.entity.OrderInfo;
+import com.xbhy.workorder.vo.OrderInfoVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -18,32 +19,41 @@ public interface OrderInfoService {
      * @param id 主键
      * @return 实例对象
      */
-    OrderInfo queryById(Long id);
+    OrderInfoVO queryById(Long id);
 
     /**
      * 分页查询
      *
-     * @param orderInfo   筛选条件
+     * @param orderInfoVO   筛选条件
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    Page<OrderInfo> queryByPage(OrderInfo orderInfo, PageRequest pageRequest);
+    Page<OrderInfoVO> queryByPage(OrderInfoVO orderInfoVO, PageRequest pageRequest);
+
+
+    /**
+     * 综合搜索
+     * @param orderInfoVO
+     * @param pageRequest
+     * @return
+     */
+    Page<OrderInfoVO> overallSearch(OrderInfoVO orderInfoVO, PageRequest pageRequest);
 
     /**
      * 新增数据
      *
-     * @param orderInfo 实例对象
+     * @param orderInfoVO 实例对象
      * @return 实例对象
      */
-    OrderInfo insert(OrderInfo orderInfo);
+    OrderInfoVO insert(OrderInfoVO orderInfoVO);
 
     /**
      * 修改数据
      *
-     * @param orderInfo 实例对象
+     * @param orderInfoVO 实例对象
      * @return 实例对象
      */
-    OrderInfo update(OrderInfo orderInfo);
+    OrderInfoVO update(OrderInfoVO orderInfoVO);
 
     /**
      * 通过主键删除数据

@@ -1,14 +1,17 @@
 package com.xbhy.workorder.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.OrderLog;
 import com.xbhy.workorder.dao.OrderLogDao;
 import com.xbhy.workorder.service.OrderLogService;
+import com.xbhy.workorder.vo.OrderLogVO;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (OrderLog)表服务实现类
@@ -28,45 +31,56 @@ public class OrderLogServiceImpl implements OrderLogService {
      * @return 实例对象
      */
     @Override
-    public OrderLog queryById(Long id) {
-        return this.orderLogDao.queryById(id);
+    public OrderLogVO queryById(Long id) {
+        return BeanUtil.copyProperties(this.orderLogDao.queryById(id),OrderLogVO.class);
+    }
+
+    /**
+     * 获取工单操作历史
+     * @param orderId
+     * @return
+     */
+    @Override
+    public List<OrderLogVO> queryByOrderId(Long orderId) {
+        return BeanUtil.copyToList(orderLogDao.queryByOrderId(orderId),OrderLogVO.class);
     }
 
     /**
      * 分页查询
      *
-     * @param orderLog 筛选条件
+     * @param orderLogVO 筛选条件
      * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<OrderLog> queryByPage(OrderLog orderLog, PageRequest pageRequest) {
+    public Page<OrderLogVO> queryByPage(OrderLogVO orderLogVO, PageRequest pageRequest) {
+        OrderLog orderLog = BeanUtil.copyProperties(orderLogVO, OrderLog.class);
         long total = this.orderLogDao.count(orderLog);
-        return new PageImpl<>(this.orderLogDao.queryAllByLimit(orderLog, pageRequest), pageRequest, total);
+        return new PageImpl<>(BeanUtil.copyToList(this.orderLogDao.queryAllByLimit(orderLog, pageRequest),OrderLogVO.class), pageRequest, total);
     }
 
     /**
      * 新增数据
      *
-     * @param orderLog 实例对象
+     * @param orderLogVO 实例对象
      * @return 实例对象
      */
     @Override
-    public OrderLog insert(OrderLog orderLog) {
-        this.orderLogDao.insert(orderLog);
-        return orderLog;
+    public OrderLogVO insert(OrderLogVO orderLogVO) {
+        this.orderLogDao.insert(BeanUtil.copyProperties(orderLogVO,OrderLog.class));
+        return orderLogVO;
     }
 
     /**
      * 修改数据
      *
-     * @param orderLog 实例对象
+     * @param orderLogVO 实例对象
      * @return 实例对象
      */
     @Override
-    public OrderLog update(OrderLog orderLog) {
-        this.orderLogDao.update(orderLog);
-        return this.queryById(orderLog.getId());
+    public OrderLogVO update(OrderLogVO orderLogVO) {
+        this.orderLogDao.update(BeanUtil.copyProperties(orderLogVO,OrderLog.class));
+        return this.queryById(orderLogVO.getId());
     }
 
     /**

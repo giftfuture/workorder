@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DateUtils {
+public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     private static final ThreadLocal<SimpleDateFormat> threadLocal = new ThreadLocal<SimpleDateFormat>();
     private static final Object object = new Object();
@@ -32,7 +32,8 @@ public class DateUtils {
     static long minTime = Timestamp.valueOf("1970-01-01 09:00:00").getTime();
     static long maxTime = Timestamp.valueOf("2038-01-19 11:00:00").getTime();
     static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+    public static final SimpleDateFormat dayOfStartFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+    public static final SimpleDateFormat dayOfEndFormat = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
     public static String YYYY = "yyyy";
 
     public static String YYYY_MM = "yyyy-MM";
@@ -40,6 +41,8 @@ public class DateUtils {
     public static String YYYY_MM_DD = "yyyy-MM-dd";
 
     public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+
+    public static String YYYYMMDDHHMMssSSS = "YYYYMMddHHmmssSSS";
 
     public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
@@ -84,6 +87,10 @@ public class DateUtils {
     public static final String dateTimeNow()
     {
         return dateTimeNow(YYYYMMDDHHMMSS);
+    }
+    public static final String dateTimeNowSSS()
+    {
+        return dateTimeNow(DateStyle.YYYY_MM_DD_SSS.getValue());
     }
 
     public static final String dateTimeNow(final String format)
@@ -131,24 +138,7 @@ public class DateUtils {
         return DateFormatUtils.format(now, "yyyyMMdd");
     }
 
-    /**
-     * 日期型字符串转化为日期 格式
-     */
-    public static Date parseDate(Object str)
-    {
-        if (str == null)
-        {
-            return null;
-        }
-        try
-        {
-            return parseDate(str.toString(), parsePatterns);
-        }
-        catch (ParseException e)
-        {
-            return null;
-        }
-    }
+
 
     /**
      * 获取服务器启动时间

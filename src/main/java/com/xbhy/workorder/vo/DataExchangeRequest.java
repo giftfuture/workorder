@@ -1,17 +1,22 @@
 package com.xbhy.workorder.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Created on 2022/7/2.
  *
  * @author zz
  */
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
+@SuperBuilder(toBuilder = true)
+@ToString
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DataExchangeRequest {
     // 待处理文本
     private String text;

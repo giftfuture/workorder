@@ -1,6 +1,7 @@
 package com.xbhy.workorder.dao;
 
 import com.xbhy.workorder.entity.StaffOrder;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
@@ -8,9 +9,10 @@ import java.util.List;
 /**
  * (StaffOrder)表数据库访问层
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:41
  */
+@Mapper
 public interface StaffOrderDao {
 
     /**

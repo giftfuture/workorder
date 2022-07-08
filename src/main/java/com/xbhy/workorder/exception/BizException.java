@@ -1,12 +1,20 @@
 package com.xbhy.workorder.exception;
 
+import com.xbhy.workorder.vo.ResponseVO;
+
 /**
  * @Description:
- * @Author: Athrun
- * @Date: 2019/4/13
+ * @Author:
+ * @Date:
  * @Version 1.0
  */
-public class BizException extends Exception {
+public class BizException extends RuntimeException {
+
+    private ResponseVO result;
+
+    public <T> ResponseVO<T> getResult() {
+        return result;
+    }
 
     public Integer getCode() {
         return code;
@@ -25,7 +33,10 @@ public class BizException extends Exception {
         super(message);
         this.code = code;
     }
-
+    public BizException(ResponseVO<?> result) {
+        super("{" + result.getCode() + " : " + result.getMessage() + "}");
+        this.result = result;
+    }
     public BizException(Throwable cause) {
         super(cause);
     }

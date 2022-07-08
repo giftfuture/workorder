@@ -113,10 +113,11 @@
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
+    <select id="queryByOrderId" resultMap="BaseResultMap">
         select
           id, order_id, pre_attach, pre_remark, pre_account_remark, create_time, last_update_time, update_time, pre_status, status, pre_content, context, pre_ticket_status, ticket_status, pre_in_amount, in_amount, pre_arrive_notice, arrive_notice, attach, remark, account_remark, create_by
-        from work_order.order_log
+        from work_order.order_log where order_id=#{orderId} order by create_time desc
+    </select>
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)

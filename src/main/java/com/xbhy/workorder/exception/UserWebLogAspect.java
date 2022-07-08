@@ -23,7 +23,7 @@ public class UserWebLogAspect {
 
     private Logger logger =  LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(public * com.ycp.businesses.could.*.controller..*.*(..))")
+    @Pointcut("execution(public * com.xbhy.workorder.rest..*.*(..))")
     public void webLog(){}
 
 

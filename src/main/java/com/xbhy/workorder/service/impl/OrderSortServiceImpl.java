@@ -1,8 +1,10 @@
 package com.xbhy.workorder.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.OrderSort;
 import com.xbhy.workorder.dao.OrderSortDao;
 import com.xbhy.workorder.service.OrderSortService;
+import com.xbhy.workorder.vo.OrderSortVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (OrderSort)表服务实现类
@@ -24,6 +27,7 @@ import javax.annotation.Resource;
 @Transactional
 @Service("orderSortService")
 public class OrderSortServiceImpl implements OrderSortService {
+
     @Resource
     private OrderSortDao orderSortDao;
 
@@ -34,45 +38,55 @@ public class OrderSortServiceImpl implements OrderSortService {
      * @return 实例对象
      */
     @Override
-    public OrderSort queryById(Long id) {
-        return this.orderSortDao.queryById(id);
+    public OrderSortVO queryById(Long id) {
+        return BeanUtil.copyProperties(this.orderSortDao.queryById(id),OrderSortVO.class);
     }
 
     /**
      * 分页查询
      *
-     * @param orderSort   筛选条件
+     * @param orderSortVO   筛选条件
      * @param pageRequest 分页对象
      * @return 查询结果
      */
     @Override
-    public Page<OrderSort> queryByPage(OrderSort orderSort, PageRequest pageRequest) {
+    public Page<OrderSortVO> queryByPage(OrderSortVO orderSortVO, PageRequest pageRequest) {
+        OrderSort orderSort = BeanUtil.copyProperties(orderSortVO,OrderSort.class);
         long total = this.orderSortDao.count(orderSort);
-        return new PageImpl<>(this.orderSortDao.queryAllByLimit(orderSort, pageRequest), pageRequest, total);
+        return new PageImpl<>(BeanUtil.copyToList(this.orderSortDao.queryAllByLimit(orderSort, pageRequest),OrderSortVO.class), pageRequest, total);
+    }
+
+    /**
+     * 获取所有工单类别
+     * @return
+     */
+    @Override
+    public List<OrderSortVO> fetchAll() {
+        return BeanUtil.copyToList(orderSortDao.fetchAll(),OrderSortVO.class);
     }
 
     /**
      * 新增数据
      *
-     * @param orderSort 实例对象
+     * @param orderSortVO 实例对象
      * @return 实例对象
      */
     @Override
-    public OrderSort insert(OrderSort orderSort) {
-        this.orderSortDao.insert(orderSort);
-        return orderSort;
+    public OrderSortVO insert(OrderSortVO orderSortVO) {
+        this.orderSortDao.insert(BeanUtil.copyProperties(orderSortVO,OrderSort.class));
+        return orderSortVO;
     }
 
     /**
      * 修改数据
      *
-     * @param orderSort 实例对象
+     * @param orderSortVO 实例对象
      * @return 实例对象
      */
     @Override
-    public OrderSort update(OrderSort orderSort) {
-        this.orderSortDao.update(orderSort);
-        return this.queryById(orderSort.getId());
+    public OrderSortVO update(OrderSortVO orderSortVO) {
+        this.orderSortDao.update(BeanUtil.copyProperties(orderSortVO,OrderSort.class));
+        return this.queryById(orderSortVO.getId());
     }
 
     /**

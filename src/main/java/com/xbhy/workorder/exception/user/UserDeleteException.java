@@ -5,12 +5,12 @@ package com.xbhy.workorder.exception.user;
  * 
  * @author
  */
-public class UserDeleteException extends UserException
+public class UserDeleteException extends StaffException
 {
     private static final long serialVersionUID = 1L;
 
     public UserDeleteException()
     {
-        super("user.passwd.delete", null);
+        super(2, null);
     }
 }

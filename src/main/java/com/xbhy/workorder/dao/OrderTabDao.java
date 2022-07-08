@@ -1,6 +1,8 @@
 package com.xbhy.workorder.dao;
 
+import com.xbhy.workorder.entity.OrderSort;
 import com.xbhy.workorder.entity.OrderTab;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
@@ -8,9 +10,10 @@ import java.util.List;
 /**
  * (OrderTab)表数据库访问层
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:37
  */
+@Mapper
 public interface OrderTabDao {
 
     /**
@@ -21,6 +24,11 @@ public interface OrderTabDao {
      */
     OrderTab queryById(Long id);
 
+    /**
+     * 获取所有选项卡
+     * @return
+     */
+    List<OrderTab> fetchAll();
     /**
      * 查询指定行数据
      *

@@ -1,5 +1,8 @@
 package com.xbhy.workorder.dao;
 
+import com.xbhy.workorder.entity.OrderDict;
+import com.xbhy.workorder.vo.OrderDictVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
@@ -7,9 +10,10 @@ import java.util.List;
 /**
  * (OrderDict)表数据库访问层
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:29
  */
+@Mapper
 public interface OrderDictDao {
 
     /**
@@ -20,6 +24,17 @@ public interface OrderDictDao {
      */
     OrderDict queryById(Long id);
 
+    /**
+     * 工单字典服务
+     * @return
+     */
+    List<OrderDictVO> loadOrderDict();
+
+    /**
+     * 工单字典服务
+     * @return
+     */
+    OrderDictVO loadOrderDictBySort(String sortTag);
     /**
      * 查询指定行数据
      *

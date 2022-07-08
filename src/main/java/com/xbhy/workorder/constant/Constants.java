@@ -98,4 +98,6 @@ public class Constants {
      * 排序的方向 "desc" 或者 "asc".
      */
     public static final String IS_ASC = "isAsc";
+
+    public static final String KAPTCHA_SESSION_KEY = "xbhySession";
 }

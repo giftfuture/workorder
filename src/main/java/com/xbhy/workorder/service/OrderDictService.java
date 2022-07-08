@@ -1,12 +1,16 @@
 package com.xbhy.workorder.service;
 
+import com.xbhy.workorder.entity.OrderDict;
+import com.xbhy.workorder.vo.OrderDictVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (OrderDict)表服务接口
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 09:44:41
  */
 public interface OrderDictService {
@@ -17,32 +21,42 @@ public interface OrderDictService {
      * @param id 主键
      * @return 实例对象
      */
-    OrderDict queryById(Long id);
+    OrderDictVO queryById(Long id);
 
+    /**
+     * 工单字典服务
+     * @return
+     */
+    List<OrderDictVO> loadOrderDict();
+    /**
+     * 工单字典服务
+     * @return
+     */
+    OrderDictVO loadOrderDictBySort(String sortTag);
     /**
      * 分页查询
      *
-     * @param orderDict 筛选条件
+     * @param orderDictVO 筛选条件
      * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<OrderDict> queryByPage(OrderDict orderDict, PageRequest pageRequest);
+    Page<OrderDictVO> queryByPage(OrderDictVO orderDictVO, PageRequest pageRequest);
 
     /**
      * 新增数据
      *
-     * @param orderDict 实例对象
+     * @param orderDictVO 实例对象
      * @return 实例对象
      */
-    OrderDict insert(OrderDict orderDict);
+    OrderDictVO insert(OrderDictVO orderDictVO);
 
     /**
      * 修改数据
      *
-     * @param orderDict 实例对象
+     * @param orderDictVO 实例对象
      * @return 实例对象
      */
-    OrderDict update(OrderDict orderDict);
+    OrderDictVO update(OrderDictVO orderDictVO);
 
     /**
      * 通过主键删除数据

@@ -57,10 +57,11 @@
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
+    <select id="fetchAll" resultMap="BaseResultMap">
         select
-          id, sort_name, create_time, deleted, sort_tag, create_by, update_by, update_time
-        from work_order.order_sort
+          id, sort_name, sort_tag
+        from work_order.order_sort where deleted = 0
+    </select>
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)

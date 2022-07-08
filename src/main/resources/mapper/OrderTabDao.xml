@@ -53,10 +53,9 @@
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="BaseResultMap">
-        select
-          id, tab_name, create_time, deleted, create_by, update_by, update_time
-        from work_order.order_tab
+    <select id="fetchAll" resultMap="BaseResultMap">
+        select id, tab_name from work_order.order_tab where deleted = 0
+    </select>
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)

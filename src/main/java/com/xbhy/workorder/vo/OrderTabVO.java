@@ -3,7 +3,9 @@ package com.xbhy.workorder.vo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,11 +13,13 @@ import java.util.Date;
 /**
  * (OrderTab)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:38
  */
 @Data
+@SuperBuilder(toBuilder = true)
 @ToString
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel(value = "工单页面",description = "工单页面")
 public class OrderTabVO implements Serializable {

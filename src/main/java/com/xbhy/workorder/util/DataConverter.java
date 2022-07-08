@@ -2,6 +2,7 @@ package com.xbhy.workorder.util;
 
 
 
+import com.xbhy.workorder.exception.TypeCastException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
@@ -621,8 +622,8 @@ public class DataConverter {
                 String strVal = (String) value;
                 if (strVal.indexOf(45) != -1) {
                     String format;
-                    if (strVal.length() == Constant.DEFAULT_DATE_FORMAT.length()) {
-                        format = Constant.DEFAULT_DATE_FORMAT;
+                    if (strVal.length() ==  DateStyle.YYYY_MM_DD_HH_MM_SS.getValue().length()) {
+                        format = DateStyle.YYYY_MM_DD_HH_MM_SS.getValue(); //Constant.DEFAULT_DATE_FORMAT
                     } else if (strVal.length() == 10) {
                         format = "yyyy-MM-dd";
                     } else if (strVal.length() == "yyyy-MM-dd HH:mm".length()) {
@@ -759,7 +760,7 @@ public class DataConverter {
         if (value instanceof byte[]) {
             return (byte[]) value;
         } else if (value instanceof String) {
-            return Base64.decodeFast((String) value);
+            return Base64.decode((String) value);
         } else {
             throw new TypeCastException("can not cast to int, value : " + value);
         }

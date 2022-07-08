@@ -4,6 +4,7 @@ import com.xbhy.workorder.config.BaseConfig;
 import com.xbhy.workorder.exception.file.FileNameLengthLimitExceededException;
 import com.xbhy.workorder.exception.file.FileSizeLimitExceededException;
 import com.xbhy.workorder.exception.file.InvalidExtensionException;
+import com.xbhy.workorder.util.DateUtils;
 import com.xbhy.workorder.util.md5.MD5Util;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +33,7 @@ public class FileUploadUtils
     /**
      * 默认上传的地址
      */
-    private static String defaultBaseDir = BaseConfig.attachUrl;
+    private static String defaultBaseDir = BaseConfig.getAttachUrl();
 
     private static int counter = 0;
 
@@ -90,7 +91,7 @@ public class FileUploadUtils
      *
      * @param baseDir 相对应用的基目录
      * @param file 上传的文件
-     * @param   上传文件类型
+     * @param  allowedExtension 上传文件类型
      * @return 返回上传成功的文件名
      * @throws FileSizeLimitExceededException 如果超出最大大小
      * @throws FileNameLengthLimitExceededException 文件名太长

@@ -3,13 +3,10 @@ package com.xbhy.workorder.shiro.service;
 
 import com.xbhy.workorder.constant.ShiroConstants;
 import com.xbhy.workorder.constant.UserConstant;
-import com.xbhy.workorder.entity.Staff;
-import com.xbhy.workorder.enums.UserStatus;
 import com.xbhy.workorder.exception.user.*;
 import com.xbhy.workorder.service.StaffService;
 import com.xbhy.workorder.util.*;
 import com.xbhy.workorder.vo.StaffVO;
-import com.xbhy.workorder.vo.StringExtension;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +20,7 @@ import java.util.Optional;
  */
 @Component
 public class SysLoginService {
+
     @Autowired
     private SysPasswordService passwordService;
 
@@ -43,7 +41,7 @@ public class SysLoginService {
             throw new UserNotExistsException();
         }
         //如果验证码不为空 那么判断验证码
-        if(!StringExtension.isNullOrEmpty(verificationCode)){
+        if(StringUtils.isNotBlank(verificationCode)){
             if(verificationCode.length() != UserConstant.VERIFICATIONCODE_LENGTH){
                 throw new UseVerificationcodeNotMatchException();
             }
@@ -60,9 +58,7 @@ public class SysLoginService {
             throw new UserPasswordNotMatchException();
         }
         // 查询用户信息
-        Staff staff = staffService.selectByLoginName(usrName);
-        StaffVO staffVO = new StaffVO();
-        BeanUtils.copyBeanProp(staffVO, staff);
+        StaffVO staffVO = staffService.selectByLoginName(usrName);
 //        if (user == null && maybeMobilePhoneNumber(username)) {
 //            user = staffService.selectUserByPhoneNumber(username);
 //        }
@@ -71,11 +67,11 @@ public class SysLoginService {
 //            user = staffService.selectUserByEmail(username);
 //        }
 
-        if (staff == null) {
+        if (staffVO == null) {
             throw new UserNotExistsException();
         }
 
-        if (UserStatus.DELETED.getCode().equals(staff.getStatus())) {
+        if (staffVO.getDeleted()) {
             throw new UserDeleteException();
         }
         passwordService.validate(staffVO, paswd,verificationCode);
@@ -101,11 +97,9 @@ public class SysLoginService {
     /**
      * 记录登录信息
      */
-    public void recordLoginInfo(StaffVO user) {
-        user.setLoginIp(ShiroUtils.getIp());
-        user.setLoginTime(DateUtils.getNowDate());
-        Staff staff = Staff.builder().build();
-        BeanUtils.copyBeanProp(staff, user);
-        staffService.update(staff);
+    public void recordLoginInfo(StaffVO staffVO) {
+        staffVO.setLoginIp(ShiroUtils.getIp());
+        staffVO.setLoginTime(DateUtils.getNowDate());
+        staffService.update(staffVO);
     }
 }

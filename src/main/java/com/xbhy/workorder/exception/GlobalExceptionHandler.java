@@ -1,7 +1,7 @@
 package com.xbhy.workorder.exception;
 
 import com.xbhy.workorder.constant.UserConstant;
-import com.xbhy.workorder.util.ResponseResult;
+import com.xbhy.workorder.vo.ResponseVO;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     public Object badArgumentHandler(IllegalArgumentException e) {
         e.printStackTrace();
         logger.error(e.toString());
-        return ResponseResult.badArgumentValue();
+        return ResponseVO.badArgumentValue();
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     public Object badArgumentHandler(MethodArgumentTypeMismatchException e) {
         e.printStackTrace();
         logger.error(e.toString());
-        return ResponseUtil.badArgumentValue();
+        return ResponseVO.badArgumentValue();
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     public Object badArgumentHandler(MissingServletRequestParameterException e) {
         e.printStackTrace();
         logger.error(e.toString());
-        return ResponseUtil.badArgumentValue();
+        return ResponseVO.badArgumentValue();
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     public Object badArgumentHandler(HttpMessageNotReadableException e) {
         e.printStackTrace();
         logger.error(e.toString());
-        return ResponseUtil.badArgumentValue();
+        return ResponseVO.badArgumentValue();
     }
 
     @ExceptionHandler(ValidationException.class)
@@ -68,10 +68,10 @@ public class GlobalExceptionHandler {
             Set<ConstraintViolation<?>> violations = exs.getConstraintViolations();
             for (ConstraintViolation<?> item : violations) {
                 String message = "请求参数异常！";//((PathImpl) item.getPropertyPath()).getLeafNode().getName() + item.getMessage();
-                return ResponseUtil.fail(402, message);
+                return ResponseVO.fail(402, message);
             }
         }
-        return ResponseUtil.badArgumentValue();
+        return ResponseVO.badArgumentValue();
     }
 
     @ExceptionHandler(UnknownAccountException.class)
@@ -79,33 +79,16 @@ public class GlobalExceptionHandler {
     public Object unknownAccountHandler(UnknownAccountException e) {
         logger.error(e.toString() + ": " + e.getMessage());
         e.printStackTrace();
-        return ResponseUtil.fail(UserConstant.USER_INVALID_CODE, UserConstant.USER_INVALID_ERROR);
+        return ResponseVO.fail(UserConstant.USER_INVALID_CODE, UserConstant.USER_INVALID_ERROR);
     }
 
-    @ExceptionHandler(InvalidAccountException.class)
-    @ResponseBody
-    public Object invalidAccountHandler(InvalidAccountException e) {
-        logger.error(e.toString() + ": " + e.getMessage());
-        e.printStackTrace();
-        return ResponseUtil.fail(UserConstant.USER_INVALID_CODE, UserConstant.USER_INVALID_ERROR);
-    }
-
-
-
-    @ExceptionHandler(UnpassException.class)
-    @ResponseBody
-    public Object unPassExceptionHandler(UnpassException e) {
-        logger.error(e.toString() + ": " + e.getMessage());
-        e.printStackTrace();
-        return ResponseUtil.fail(UserConstant.UNPASS_CODE, UserConstant.UNPASS_ERROR);
-    }
 
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseBody
     public Object unauthorizedHandler(UnauthorizedException e) {
         logger.error(e.toString() + ": " + e.getMessage());
         e.printStackTrace();
-        return ResponseUtil.unauthz();
+        return ResponseVO.unauthz();
     }
 
 
@@ -114,6 +97,6 @@ public class GlobalExceptionHandler {
     public Object seriousHandler(Exception e) {
         logger.error(e.toString() + ": " + e.getMessage());
         e.printStackTrace();
-        return ResponseUtil.serious();
+        return ResponseVO.serious();
     }
 }

@@ -65,6 +65,7 @@
         select
           role_id, role_name, role_key, deleted, remark, create_by, create_time, update_by, update_time
         from work_order.sys_role
+    </select>
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)

@@ -1,6 +1,10 @@
 package com.xbhy.workorder.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,10 +12,14 @@ import java.util.Date;
 /**
  * (StaffOrder)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:42
  */
 @Data
+@SuperBuilder(toBuilder = true)
+@ToString
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class StaffOrderVO implements Serializable {
     private static final long serialVersionUID = -31856756177628467L;
     

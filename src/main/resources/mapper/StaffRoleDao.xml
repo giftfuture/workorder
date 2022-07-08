@@ -66,6 +66,7 @@
         select
           id, staff_id, role_id, deleted, create_by, create_time, update_by, update_time
         from work_order.staff_role
+    </select>
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)

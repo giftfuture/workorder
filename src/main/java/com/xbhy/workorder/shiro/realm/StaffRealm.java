@@ -9,6 +9,7 @@ import com.xbhy.workorder.service.StaffRoleService;
 import com.xbhy.workorder.service.SysRoleService;
 import com.xbhy.workorder.shiro.service.SysLoginService;
 import com.xbhy.workorder.util.ShiroUtils;
+import com.xbhy.workorder.vo.StaffRoleVO;
 import com.xbhy.workorder.vo.StaffVO;
 import com.xbhy.workorder.vo.UserPassWordOrVerigicationCode;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,6 @@ public class StaffRealm extends AuthorizingRealm
 {
     @Autowired
     private StaffOrderService staffOrderService;
-
     @Autowired
     private SysLoginService sysLoginService;
     @Autowired
@@ -49,8 +49,8 @@ public class StaffRealm extends AuthorizingRealm
     {
         StaffVO staffVO = ShiroUtils.getStaff();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        List<StaffRole> staffRoles = staffRoleService.queryByStaffId(staffVO.getId());
-        List<String> roleKeys = staffRoles.stream().map(StaffRole::getRoleKey).collect(Collectors.toList());
+        List<StaffRoleVO> staffRoles = staffRoleService.queryByStaffId(staffVO.getId());
+        List<String> roleKeys = staffRoles.stream().map(StaffRoleVO::getRoleKey).collect(Collectors.toList());
         if(Optional.ofNullable(staffRoles).isPresent() && roleKeys.contains(RoleKey.ADMIN.getKey())){
         // 管理员拥有所有权限
             info.addRole("admin");
@@ -93,14 +93,6 @@ public class StaffRealm extends AuthorizingRealm
         catch (UserPasswordRetryLimitCountException e)
         {
             throw new ExcessiveAttemptsException(e.getMessage(), e);
-        }
-        catch (UserPasswordRetryLimitExceedException e)
-        {
-            throw new ExcessiveAttemptsException(e.getMessage(), e);
-        }
-        catch (UserBlockedException e)
-        {
-            throw new LockedAccountException(e.getMessage(), e);
         }
         catch (UseVerificationcodeNotMatchException e)
         {

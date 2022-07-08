@@ -1,6 +1,7 @@
 package com.xbhy.workorder.dao;
 
 import com.xbhy.workorder.entity.OrderSort;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
@@ -8,9 +9,10 @@ import java.util.List;
 /**
  * (OrderSort)表数据库访问层
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:36
  */
+@Mapper
 public interface OrderSortDao {
 
     /**
@@ -21,6 +23,11 @@ public interface OrderSortDao {
      */
     OrderSort queryById(Long id);
 
+    /**
+     * 获取所有工单类别
+     * @return
+     */
+    List<OrderSort> fetchAll();
     /**
      * 查询指定行数据
      *

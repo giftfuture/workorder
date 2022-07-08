@@ -1,6 +1,8 @@
 package com.xbhy.workorder.dao;
 
 import com.xbhy.workorder.entity.OrderLog;
+import com.xbhy.workorder.vo.OrderLogVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
@@ -8,9 +10,10 @@ import java.util.List;
 /**
  * (OrderLog)表数据库访问层
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:34
  */
+@Mapper
 public interface OrderLogDao {
 
     /**
@@ -21,6 +24,12 @@ public interface OrderLogDao {
      */
     OrderLog queryById(Long id);
 
+    /**
+     * 获取工单操作历史
+     * @param orderId
+     * @return
+     */
+    List<OrderLogVO> queryByOrderId(@Param("orderId") Long orderId);
     /**
      * 查询指定行数据
      *

@@ -1,8 +1,11 @@
 package com.xbhy.workorder.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.xbhy.workorder.entity.Staff;
 import com.xbhy.workorder.entity.StaffOrder;
 import com.xbhy.workorder.dao.StaffOrderDao;
 import com.xbhy.workorder.service.StaffOrderService;
+import com.xbhy.workorder.vo.StaffOrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -34,45 +37,46 @@ public class StaffOrderServiceImpl implements StaffOrderService {
      * @return 实例对象
      */
     @Override
-    public StaffOrder queryById(Long id) {
-        return this.staffOrderDao.queryById(id);
+    public StaffOrderVO queryById(Long id) {
+        return BeanUtil.copyProperties(this.staffOrderDao.queryById(id),StaffOrderVO.class);
     }
 
     /**
      * 分页查询
      *
-     * @param staffOrder  筛选条件
+     * @param staffOrderVO  筛选条件
      * @param pageRequest 分页对象
      * @return 查询结果
      */
     @Override
-    public Page<StaffOrder> queryByPage(StaffOrder staffOrder, PageRequest pageRequest) {
+    public Page<StaffOrderVO> queryByPage(StaffOrderVO staffOrderVO, PageRequest pageRequest) {
+        StaffOrder staffOrder = BeanUtil.copyProperties(staffOrderVO,StaffOrder.class);
         long total = this.staffOrderDao.count(staffOrder);
-        return new PageImpl<>(this.staffOrderDao.queryAllByLimit(staffOrder, pageRequest), pageRequest, total);
+        return new PageImpl<>(BeanUtil.copyToList(this.staffOrderDao.queryAllByLimit(staffOrder, pageRequest),StaffOrderVO.class), pageRequest, total);
     }
 
     /**
      * 新增数据
      *
-     * @param staffOrder 实例对象
+     * @param staffOrderVO 实例对象
      * @return 实例对象
      */
     @Override
-    public StaffOrder insert(StaffOrder staffOrder) {
-        this.staffOrderDao.insert(staffOrder);
-        return staffOrder;
+    public StaffOrderVO insert(StaffOrderVO staffOrderVO) {
+        this.staffOrderDao.insert(BeanUtil.copyProperties(staffOrderVO,StaffOrder.class));
+        return staffOrderVO;
     }
 
     /**
      * 修改数据
      *
-     * @param staffOrder 实例对象
+     * @param staffOrderVO 实例对象
      * @return 实例对象
      */
     @Override
-    public StaffOrder update(StaffOrder staffOrder) {
-        this.staffOrderDao.update(staffOrder);
-        return this.queryById(staffOrder.getId());
+    public StaffOrderVO update(StaffOrderVO staffOrderVO) {
+        this.staffOrderDao.update(BeanUtil.copyProperties(staffOrderVO, StaffOrder.class));
+        return this.queryById(staffOrderVO.getId());
     }
 
     /**

@@ -15,18 +15,12 @@ public class OnlineSession extends SimpleSession
     private static final long serialVersionUID = 1L;
 
     /** 用户ID */
-    private Long userId;
+    private Long staffId;
 
     /** 用户名称 */
     private String loginName;
 
-    /** 部门名称 */
-    private String deptName;
-    /** 公司ID */
-    private Integer companyId;
 
-    /** 公司名称 */
-    private String compName;
 	
 	/** 用户头像 */
 	private String avatar;
@@ -78,14 +72,12 @@ public class OnlineSession extends SimpleSession
         this.os = os;
     }
 
-    public Long getUserId()
-    {
-        return userId;
+    public Long getStaffId() {
+        return staffId;
     }
 
-    public void setUserId(Long userId)
-    {
-        this.userId = userId;
+    public void setStaffId(Long staffId) {
+        this.staffId = staffId;
     }
 
     public String getLoginName()
@@ -96,16 +88,6 @@ public class OnlineSession extends SimpleSession
     public void setLoginName(String loginName)
     {
         this.loginName = loginName;
-    }
-
-    public String getDeptName()
-    {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName)
-    {
-        this.deptName = deptName;
     }
 
     public OnlineStatus getStatus()

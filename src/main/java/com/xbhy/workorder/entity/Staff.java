@@ -7,11 +7,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * (Staff)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 11:20:18
  */
 @Data
@@ -67,7 +68,7 @@ public class Staff implements Serializable {
     /**
      *  英文名
      */
-    private String engName;
+    private String enName;
     /**
      * 邮箱
      */
@@ -92,6 +93,8 @@ public class Staff implements Serializable {
      * 最近登录时间
      */
     private Date loginTime;
+
+    private transient List<SysRole> roleList;
 
 
     public Long getId() {
@@ -190,12 +193,12 @@ public class Staff implements Serializable {
         this.loginName = loginName;
     }
 
-    public String getEngName() {
-        return engName;
+    public String getEnName() {
+        return enName;
     }
 
-    public void setEngName(String engName) {
-        this.engName = engName;
+    public void setEnName(String enName) {
+        this.enName = enName;
     }
 
     public String getEmail() {
@@ -246,5 +249,12 @@ public class Staff implements Serializable {
         this.loginTime = loginTime;
     }
 
+    public List<SysRole> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<SysRole> roleList) {
+        this.roleList = roleList;
+    }
 }
 

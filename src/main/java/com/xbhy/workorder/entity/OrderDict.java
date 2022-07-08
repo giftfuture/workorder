@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * (OrderDict)实体类
  *
- * @author makejava
+ * @author 
  * @since 2022-06-28 10:37:31
  */
 @Data
@@ -26,6 +26,11 @@ public class OrderDict implements Serializable {
      * 工单组别
      */
     private Long orderSortId;
+
+    /**
+     * 工单组别标签
+     */
+    private String sortTag;
     /**
      * 状态枚举
      */
@@ -128,5 +133,12 @@ public class OrderDict implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getSortTag() {
+        return sortTag;
+    }
+
+    public void setSortTag(String sortTag) {
+        this.sortTag = sortTag;
+    }
 }
 

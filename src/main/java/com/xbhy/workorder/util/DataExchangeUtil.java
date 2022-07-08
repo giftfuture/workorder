@@ -314,7 +314,7 @@ public class DataExchangeUtil {
                     result.add(memo);
                 }
             }
-            File recordFile = new File(BaseConfig.historyFilePath);
+            File recordFile = new File(BaseConfig.getHistoryFilePath());
             for (List<String> result : results) {
                 FileUtils.writeStringToFile(recordFile,
                         LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ','

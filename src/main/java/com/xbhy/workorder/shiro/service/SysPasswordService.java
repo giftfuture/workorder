@@ -1,15 +1,12 @@
 package com.xbhy.workorder.shiro.service;
 
 
-import com.xbhy.workorder.component.AsyncManager;
-import com.xbhy.workorder.constant.Constants;
 import com.xbhy.workorder.constant.ShiroConstants;
 import com.xbhy.workorder.exception.user.UseVerificationcodeNotMatchException;
 import com.xbhy.workorder.exception.user.UserPasswordNotMatchException;
-import com.xbhy.workorder.exception.user.UserPasswordRetryLimitExceedException;
-import com.xbhy.workorder.util.MessageUtils;
+import com.xbhy.workorder.exception.user.UserPasswordRetryLimitCountException;
 import com.xbhy.workorder.vo.StaffVO;
-import com.xbhy.workorder.vo.StringExtension;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.mindrot.jbcrypt.BCrypt;
@@ -53,10 +50,10 @@ public class SysPasswordService {
             loginRecordCache.put(loginName, retryCount);
         }
         if (retryCount.incrementAndGet() > Integer.valueOf(maxRetryCount).intValue()) {
-            throw new UserPasswordRetryLimitExceedException(Integer.valueOf(maxRetryCount).intValue());
+            throw new UserPasswordRetryLimitCountException(Integer.valueOf(maxRetryCount).intValue());
         }
         //如果用验证码登录
-        if (!StringExtension.isNullOrEmpty(verificationCode)) {
+        if (StringUtils.isNotBlank(verificationCode)) {
             if(this.loginVerificationCode(user.getPhone(),verificationCode,user.getLoginName(),retryCount)){
                 //删除掉缓存用户的错误次数及过期时间
                 clearLoginRecordCache(loginName);
@@ -103,11 +100,11 @@ public class SysPasswordService {
      * @return
      */
     private Boolean loginVerificationCode(String phone,String verificationCode,String loginName,AtomicInteger retryCount){
-        if(StringExtension.isNullOrEmpty(phone)){
+        if(StringUtils.isNotBlank(phone)){
             throw new UserPasswordNotMatchException();
         }
         String redisVerificationCode = null;//redisDao.getUsersPhone(phone);
-        if (StringExtension.isNullOrEmpty(redisVerificationCode)) {
+        if (StringUtils.isNotBlank(redisVerificationCode)) {
             throw new UseVerificationcodeNotMatchException();
         }
         if (!redisVerificationCode.equals(verificationCode)) {

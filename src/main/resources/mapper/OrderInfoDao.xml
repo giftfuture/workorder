@@ -35,62 +35,82 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select
-          id, order_no, order_tag, content, send_content, status, ticket_status, in_amount, arrive_notice, create_time, account_remark, remark, pics, order_sort, deleted, create_by, update_by, update_time
-        from order_info
+        oi.id, oi.order_no, oi.order_tag, oi.content, oi.send_content, oi.status, oi.ticket_status, oi.in_amount, oi.arrive_notice, oi.create_time, oi.account_remark, oi.remark, oi.pics, oi.order_sort, oi.deleted, oi.create_by, oi.update_by, oi.update_time
+        from order_info oi
         <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
             <if test="orderNo != null and orderNo != ''">
-                and order_no = #{orderNo}
+                and oi.order_no = #{orderNo}
+            </if>
+            <if test="orderNoPrefix != null and orderNoPrefix != ''">
+                and oi.order_no like concat('#{orderNoPrefix}','%')
             </if>
             <if test="orderTag != null and orderTag != ''">
-                and order_tag = #{orderTag}
+                and oi.order_tag = #{orderTag}
             </if>
             <if test="content != null and content != ''">
-                and content = #{content}
+                and oi.content = #{content}
             </if>
             <if test="sendContent != null and sendContent != ''">
-                and send_content = #{sendContent}
+                and oi.send_content = #{sendContent}
             </if>
             <if test="status != null and status != ''">
-                and status = #{status}
+                AND (
+                <foreach collection="status.split(',')" item="substatus" index="index" open="" close="" separator="AND">
+                    　　FIND_IN_SET(#{substatus},oi.status)
+                </foreach>)
             </if>
             <if test="ticketStatus != null and ticketStatus != ''">
-                and ticket_status = #{ticketStatus}
+                AND (
+                <foreach collection="ticketStatus.split(',')" item="substatus" index="index" open="" close="" separator="AND">
+                    　　FIND_IN_SET(#{substatus},oi.ticket_status)
+                </foreach>)
             </if>
+            <if test="'KP'!= orderSort and contentRemarkCondtion != null and contentRemarkCondtion.size >0">
+                <foreach collection="contentRemarkCondtion.keys" item="key" open="(" separator="or" close=")">
+                    <foreach collection="key.split(',')" item ="k" separator="and" open="(" close=")">
+                        　FIND_IN_SET(#{k},oi.content)
+                    </foreach>
+                    <foreach collection="contentRemarkCondtion[key].split(',')" item ="v" separator="and" open="(" close=")">
+                    　   FIND_IN_SET(#{v},oi.remark)
+                    </foreach>
+                </foreach>
+            </if>
+            <if test="'KP'!= orderSort and kpContextList != null and kpContextList.size >0">
+                    <foreach collection="kpContextList" item = "item"  open="(" separator="and" close=")">
+                        　FIND_IN_SET(#{item},oi.content)
+                    </foreach>
+            </if>
+
             <if test="inAmount != null">
-                and in_amount = #{inAmount}
+                and oi.in_amount = #{inAmount}
             </if>
             <if test="arriveNotice != null and arriveNotice != ''">
-                and arrive_notice = #{arriveNotice}
+                and oi.arrive_notice = #{arriveNotice}
             </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
+            <if test="createTimeBegin != null and createTimeEnd != null">
+                and oi.create_time between #{createTimeBegin} and #{createTimeEnd}
             </if>
+
             <if test="accountRemark != null and accountRemark != ''">
-                and account_remark = #{accountRemark}
+                and oi.account_remark = #{accountRemark}
             </if>
             <if test="remark != null and remark != ''">
-                and remark = #{remark}
+                and oi.remark = #{remark}
             </if>
             <if test="pics != null and pics != ''">
-                and pics = #{pics}
+                and oi.pics = #{pics}
             </if>
             <if test="orderSort != null">
-                and order_sort = #{orderSort}
+                and oi.order_sort = #{orderSort}
             </if>
             <if test="deleted != null">
-                and deleted = #{deleted}
+                and oi.deleted = #{deleted}
+            </if>
+            <if test="creator != null and creator != ''">
+                and oi.create_by in(#{creator})
             </if>
             <if test="createBy != null">
-                and create_by = #{createBy}
-            </if>
-            <if test="updateBy != null">
-                and update_by = #{updateBy}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
+                and oi.create_by = #{createBy}
             </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
@@ -101,6 +121,7 @@
         select
           id, order_no, order_tag, content, send_content, status, ticket_status, in_amount, arrive_notice, create_time, account_remark, remark, pics, order_sort, deleted, create_by, update_by, update_time
         from work_order.order_info
+    </select>
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)
