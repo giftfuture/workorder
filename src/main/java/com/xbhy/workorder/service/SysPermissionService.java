@@ -2,8 +2,11 @@ package com.xbhy.workorder.service;
 
 import com.xbhy.workorder.entity.SysPermission;
 import com.xbhy.workorder.vo.SysPermissionVO;
+import com.xbhy.workorder.vo.SysRolePermissionVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (SysPermission)表服务接口
@@ -20,7 +23,12 @@ public interface SysPermissionService {
      * @return 实例对象
      */
     SysPermissionVO queryById(Integer id);
-
+    /**
+     * 通过角色获取权限
+     * @param roleId
+     * @return
+     */
+    List<SysPermissionVO> queryByRoleId(Integer roleId);
     /**
      * 分页查询
      *

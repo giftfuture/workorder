@@ -2,7 +2,7 @@ package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.StaffSession;
-import com.xbhy.workorder.dao.StaffSessionDao;
+import com.xbhy.workorder.mapper.StaffSessionMapper;
 import com.xbhy.workorder.service.StaffSessionService;
 import com.xbhy.workorder.vo.StaffSessionVO;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.List;
 @Service("staffSessionService")
 public class StaffSessionServiceImpl implements StaffSessionService {
     @Resource
-    private StaffSessionDao staffSessionDao;
+    private StaffSessionMapper staffSessionMapper;
 
 
     /**
@@ -34,7 +34,7 @@ public class StaffSessionServiceImpl implements StaffSessionService {
      */
     @Override
     public StaffSessionVO queryById(Integer id) {
-        return BeanUtil.copyProperties(this.staffSessionDao.queryById(id),StaffSessionVO.class);
+        return BeanUtil.copyProperties(this.staffSessionMapper.queryById(id),StaffSessionVO.class);
     }
 
     /**
@@ -44,17 +44,17 @@ public class StaffSessionServiceImpl implements StaffSessionService {
      */
     @Override
     public StaffSessionVO queryBySessionId(String sessionId) {
-        return BeanUtil.copyProperties(this.staffSessionDao.queryBySessionId(sessionId),StaffSessionVO.class);
+        return BeanUtil.copyProperties(this.staffSessionMapper.queryBySessionId(sessionId),StaffSessionVO.class);
     }
 
     @Override
     public List<StaffSessionVO> selectOnlineByExpired(Date expiredDate) {
-        return BeanUtil.copyToList(this.staffSessionDao.selectOnlineByExpired(expiredDate),StaffSessionVO.class);
+        return BeanUtil.copyToList(this.staffSessionMapper.selectOnlineByExpired(expiredDate),StaffSessionVO.class);
     }
 
     @Override
     public Integer batchDeleteOnline(List<String> sessionIds) {
-        return this.staffSessionDao.batchDeleteSession(sessionIds);
+        return this.staffSessionMapper.batchDeleteSession(sessionIds);
     }
 
     /**
@@ -67,8 +67,8 @@ public class StaffSessionServiceImpl implements StaffSessionService {
     @Override
     public Page<StaffSessionVO> queryByPage(StaffSessionVO staffSessionVO, PageRequest pageRequest) {
         StaffSession staffSession = BeanUtil.copyProperties(staffSessionVO,StaffSession.class);
-        long total = this.staffSessionDao.count(staffSession);
-        return new PageImpl<>(BeanUtil.copyToList(this.staffSessionDao.queryAllByLimit(staffSession, pageRequest),StaffSessionVO.class), pageRequest, total);
+        long total = this.staffSessionMapper.count(staffSession);
+        return new PageImpl<>(BeanUtil.copyToList(this.staffSessionMapper.queryAllByLimit(staffSession, pageRequest),StaffSessionVO.class), pageRequest, total);
     }
 
     /**
@@ -79,7 +79,7 @@ public class StaffSessionServiceImpl implements StaffSessionService {
      */
     @Override
     public StaffSessionVO insert(StaffSessionVO staffSessionVO) {
-        this.staffSessionDao.insert(BeanUtil.copyProperties(staffSessionVO,StaffSession.class));
+        this.staffSessionMapper.insert(BeanUtil.copyProperties(staffSessionVO,StaffSession.class));
         return staffSessionVO;
     }
 
@@ -91,7 +91,7 @@ public class StaffSessionServiceImpl implements StaffSessionService {
      */
     @Override
     public StaffSessionVO update(StaffSessionVO staffSessionVO) {
-        this.staffSessionDao.update(BeanUtil.copyProperties(staffSessionVO,StaffSession.class));
+        this.staffSessionMapper.update(BeanUtil.copyProperties(staffSessionVO,StaffSession.class));
         return this.queryById(staffSessionVO.getId());
     }
 
@@ -103,6 +103,6 @@ public class StaffSessionServiceImpl implements StaffSessionService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        return this.staffSessionDao.deleteById(id) > 0;
+        return this.staffSessionMapper.deleteById(id) > 0;
     }
 }

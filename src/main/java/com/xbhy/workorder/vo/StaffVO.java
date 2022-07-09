@@ -1,5 +1,6 @@
 package com.xbhy.workorder.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xbhy.workorder.entity.SysRole;
 import lombok.Data;
@@ -47,6 +48,7 @@ public class StaffVO implements Serializable {
     /**
      *  出生年月
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birth;
     /**
      *  手机号
@@ -59,6 +61,7 @@ public class StaffVO implements Serializable {
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
     /**
      * 删除标志（0代表存在 1代表删除）
@@ -71,7 +74,7 @@ public class StaffVO implements Serializable {
     /**
      *  英文名
      */
-    private String engName;
+    private String enName;
     /**
      * 邮箱
      */
@@ -83,6 +86,7 @@ public class StaffVO implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     /**
      * 更新者
@@ -95,6 +99,7 @@ public class StaffVO implements Serializable {
     /**
      * 最近登录时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date loginTime;
 
     private List<SysRole> sysRoleList;
@@ -196,12 +201,12 @@ public class StaffVO implements Serializable {
         this.loginName = loginName;
     }
 
-    public String getEngName() {
-        return engName;
+    public String getEnName() {
+        return enName;
     }
 
-    public void setEngName(String engName) {
-        this.engName = engName;
+    public void setEnName(String enName) {
+        this.enName = enName;
     }
 
     public String getEmail() {

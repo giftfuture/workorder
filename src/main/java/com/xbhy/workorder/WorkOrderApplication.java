@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -26,10 +27,11 @@ import java.util.List;
 
 @EnableScheduling
 @SpringBootApplication(scanBasePackages = {"com.xbhy.workorder"})
-@MapperScan("com.xbhy.workorder.dao")
-@EnableTransactionManagement()
+@MapperScan("com.xbhy.workorder.mapper")
+@ImportResource(locations = {"classpath:kaptcha.xml"})
+//@EnableTransactionManagement()
 @EnableSwagger2
-@EnableAspectJAutoProxy(proxyTargetClass=true,exposeProxy = true)
+//@EnableAspectJAutoProxy(proxyTargetClass=true,exposeProxy = true)
 @EnableAsync
 public class WorkOrderApplication {
 

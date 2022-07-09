@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xbhy.workorder.constant.ShiroConstants;
 import com.xbhy.workorder.util.ServletUtils;
 import com.xbhy.workorder.util.ShiroUtils;
-import com.xbhy.workorder.vo.AjaxResult;
+import com.xbhy.workorder.vo.ResponseVO;
 import com.xbhy.workorder.vo.StaffVO;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
@@ -148,8 +148,7 @@ public class KickoutSessionFilter extends AccessControlFilter
         HttpServletResponse res = (HttpServletResponse) response;
         if (ServletUtils.isAjaxRequest(req))
         {
-            AjaxResult ajaxResult = AjaxResult.error("您已在别处登录，请您修改密码或重新登录");
-            ServletUtils.renderString(res, objectMapper.writeValueAsString(ajaxResult));
+            ServletUtils.renderString(res, objectMapper.writeValueAsString(ResponseVO.fail("您已在别处登录，请您修改密码或重新登录")));
         }
         else
         {

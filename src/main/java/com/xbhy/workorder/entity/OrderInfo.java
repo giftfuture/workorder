@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.io.Serializable;
 import java.util.List;
@@ -25,6 +28,8 @@ public class OrderInfo implements Serializable {
     /**
      * 序号
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
      * 工单号

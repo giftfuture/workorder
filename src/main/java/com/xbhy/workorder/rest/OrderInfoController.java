@@ -1,11 +1,11 @@
 package com.xbhy.workorder.rest;
 
+import com.google.common.collect.Maps;
 import com.xbhy.workorder.config.BaseConfig;
 import com.xbhy.workorder.entity.OrderInfo;
 import com.xbhy.workorder.service.OrderInfoService;
 import com.xbhy.workorder.util.file.FileUploadUtils;
 import com.xbhy.workorder.util.file.FileUtils;
-import com.xbhy.workorder.vo.AjaxResult;
 import com.xbhy.workorder.vo.OrderInfoVO;
 import com.xbhy.workorder.vo.ResponseVO;
 import io.swagger.annotations.Api;
@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * (OrderInfo)表控制层
@@ -148,7 +149,7 @@ public class OrderInfoController {
      */
     @PostMapping("/upload")
     @ResponseBody
-    public AjaxResult uploadFile(MultipartFile file) throws Exception
+    public ResponseVO uploadFile(MultipartFile file) throws Exception
     {
         try
         {
@@ -157,14 +158,14 @@ public class OrderInfoController {
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             String url = filePath + fileName;
-            AjaxResult ajax = AjaxResult.success();
-            ajax.put("fileName", fileName);
-            ajax.put("url", url);
-            return ajax;
+            Map<String,String> data = Maps.newHashMap();
+            data.put("fileName", fileName);
+            data.put("url", url);
+            return ResponseVO.success(data);
         }
         catch (Exception e)
         {
-            return AjaxResult.error(e.getMessage());
+            return ResponseVO.fail(e.getMessage());
         }
     }
 }

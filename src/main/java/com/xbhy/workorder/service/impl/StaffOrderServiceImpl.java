@@ -1,9 +1,8 @@
 package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.xbhy.workorder.entity.Staff;
 import com.xbhy.workorder.entity.StaffOrder;
-import com.xbhy.workorder.dao.StaffOrderDao;
+import com.xbhy.workorder.mapper.StaffOrderMapper;
 import com.xbhy.workorder.service.StaffOrderService;
 import com.xbhy.workorder.vo.StaffOrderVO;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,7 @@ import javax.annotation.Resource;
 @Service("staffOrderService")
 public class StaffOrderServiceImpl implements StaffOrderService {
     @Resource
-    private StaffOrderDao staffOrderDao;
+    private StaffOrderMapper staffOrderMapper;
 
     /**
      * 通过ID查询单条数据
@@ -38,7 +37,7 @@ public class StaffOrderServiceImpl implements StaffOrderService {
      */
     @Override
     public StaffOrderVO queryById(Long id) {
-        return BeanUtil.copyProperties(this.staffOrderDao.queryById(id),StaffOrderVO.class);
+        return BeanUtil.copyProperties(this.staffOrderMapper.queryById(id),StaffOrderVO.class);
     }
 
     /**
@@ -51,8 +50,8 @@ public class StaffOrderServiceImpl implements StaffOrderService {
     @Override
     public Page<StaffOrderVO> queryByPage(StaffOrderVO staffOrderVO, PageRequest pageRequest) {
         StaffOrder staffOrder = BeanUtil.copyProperties(staffOrderVO,StaffOrder.class);
-        long total = this.staffOrderDao.count(staffOrder);
-        return new PageImpl<>(BeanUtil.copyToList(this.staffOrderDao.queryAllByLimit(staffOrder, pageRequest),StaffOrderVO.class), pageRequest, total);
+        long total = this.staffOrderMapper.count(staffOrder);
+        return new PageImpl<>(BeanUtil.copyToList(this.staffOrderMapper.queryAllByLimit(staffOrder, pageRequest),StaffOrderVO.class), pageRequest, total);
     }
 
     /**
@@ -63,7 +62,7 @@ public class StaffOrderServiceImpl implements StaffOrderService {
      */
     @Override
     public StaffOrderVO insert(StaffOrderVO staffOrderVO) {
-        this.staffOrderDao.insert(BeanUtil.copyProperties(staffOrderVO,StaffOrder.class));
+        this.staffOrderMapper.insert(BeanUtil.copyProperties(staffOrderVO,StaffOrder.class));
         return staffOrderVO;
     }
 
@@ -75,7 +74,7 @@ public class StaffOrderServiceImpl implements StaffOrderService {
      */
     @Override
     public StaffOrderVO update(StaffOrderVO staffOrderVO) {
-        this.staffOrderDao.update(BeanUtil.copyProperties(staffOrderVO, StaffOrder.class));
+        this.staffOrderMapper.update(BeanUtil.copyProperties(staffOrderVO, StaffOrder.class));
         return this.queryById(staffOrderVO.getId());
     }
 
@@ -87,6 +86,6 @@ public class StaffOrderServiceImpl implements StaffOrderService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return this.staffOrderDao.deleteById(id) > 0;
+        return this.staffOrderMapper.deleteById(id) > 0;
     }
 }

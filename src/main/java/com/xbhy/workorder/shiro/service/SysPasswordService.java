@@ -6,42 +6,51 @@ import com.xbhy.workorder.exception.user.UseVerificationcodeNotMatchException;
 import com.xbhy.workorder.exception.user.UserPasswordNotMatchException;
 import com.xbhy.workorder.exception.user.UserPasswordRetryLimitCountException;
 import com.xbhy.workorder.vo.StaffVO;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.config.ConfigurationException;
+import org.apache.shiro.io.ResourceUtils;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 登录密码方法
  *
- * @author ycp
+ * @author
  */
 @Component
 public class SysPasswordService {
 
-    @Qualifier("cacheManager")
     @Autowired
     private CacheManager cacheManager;
 
 
     private Cache<String, AtomicInteger> loginRecordCache;
 
-    @Value(value = "${user.password.maxRetryCount}")
+    @Value(value = "${staff.maxRetryCount}")
     private String maxRetryCount;
 
-    @PostConstruct
-    public void init() {
-        loginRecordCache = cacheManager.getCache(ShiroConstants.LOGINRECORDCACHE);
-    }
+//    @PostConstruct
+//    public void init() {
+//        System.out.println(loginRecordCache);
+//    }
 
     public void validate(StaffVO user, String password, String verificationCode) {
+        loginRecordCache = cacheManager.getCache(ShiroConstants.LOGINRECORDCACHE);
         String loginName = user.getLoginName();
         AtomicInteger retryCount = loginRecordCache.get(loginName);
 

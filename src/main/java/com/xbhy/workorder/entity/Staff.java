@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.io.Serializable;
 import java.util.List;
@@ -21,7 +24,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Staff implements Serializable {
     private static final long serialVersionUID = 779443444370459476L;
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
      * 员工姓名

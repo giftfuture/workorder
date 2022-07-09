@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -43,6 +46,8 @@ public class FileInfo implements Serializable {
     /**
      * ID
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
      * 文件真实的名称

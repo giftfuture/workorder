@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -20,7 +23,8 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SysRolePermission implements Serializable {
     private static final long serialVersionUID = 347922746718184938L;
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
     private Integer roleId;

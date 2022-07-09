@@ -8,52 +8,6 @@ import org.springframework.data.web.PageableDefault;
 
 public class UnPage implements Pageable {
 
-//    @Override
-//    public boolean isPaged() {
-//        return Boolean.FALSE;
-//    }
-//
-//    @Override
-//    public int getPageNumber() {
-//        return super.;
-//    }
-//
-//    @Override
-//    public int getPageSize() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public long getOffset() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public Sort getSort() {
-//        return null;
-//    }
-//
-//    @Override
-//    public Pageable next() {
-//        return null;
-//    }
-//
-//    @Override
-//    public Pageable previousOrFirst() {
-//        return null;
-//    }
-//
-//    @Override
-//    public Pageable first() {
-//        return null;
-//    }
-//
-//    @Override
-//    public boolean hasPrevious() {
-//        return false;
-//    }
-//    private Unpaged() {
-//    }
     @Override
     public boolean isPaged() {
         return false;

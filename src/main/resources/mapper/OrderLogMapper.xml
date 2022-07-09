@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xbhy.workorder.mapper.OrderLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.xbhy.workorder.entity.OrderLog">
+        <!--@Table order_log-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="preAttach" column="pre_attach" jdbcType="VARCHAR"/>
+        <result property="preRemark" column="pre_remark" jdbcType="VARCHAR"/>
+        <result property="preAccountRemark" column="pre_account_remark" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="preStatus" column="pre_status" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="preContent" column="pre_content" jdbcType="VARCHAR"/>
+        <result property="context" column="context" jdbcType="VARCHAR"/>
+        <result property="preTicketStatus" column="pre_ticket_status" jdbcType="VARCHAR"/>
+        <result property="ticketStatus" column="ticket_status" jdbcType="VARCHAR"/>
+        <result property="preInAmount" column="pre_in_amount" jdbcType="NUMERIC"/>
+        <result property="inAmount" column="in_amount" jdbcType="NUMERIC"/>
+        <result property="preArriveNotice" column="pre_arrive_notice" jdbcType="VARCHAR"/>
+        <result property="arriveNotice" column="arrive_notice" jdbcType="VARCHAR"/>
+        <result property="attach" column="attach" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="accountRemark" column="account_remark" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, order_id, pre_attach, pre_remark, pre_account_remark, create_time, last_update_time, update_time, pre_status, status, pre_content, context, pre_ticket_status, ticket_status, pre_in_amount, in_amount, pre_arrive_notice, arrive_notice, attach, remark, account_remark, create_by
+        from order_log
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, order_id, pre_attach, pre_remark, pre_account_remark, create_time, last_update_time, update_time, pre_status, status, pre_content, context, pre_ticket_status, ticket_status, pre_in_amount, in_amount, pre_arrive_notice, arrive_notice, attach, remark, account_remark, create_by
+        from order_log
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="preAttach != null and preAttach != ''">
+                and pre_attach = #{preAttach}
+            </if>
+            <if test="preRemark != null and preRemark != ''">
+                and pre_remark = #{preRemark}
+            </if>
+            <if test="preAccountRemark != null and preAccountRemark != ''">
+                and pre_account_remark = #{preAccountRemark}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="lastUpdateTime != null">
+                and last_update_time = #{lastUpdateTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="preStatus != null and preStatus != ''">
+                and pre_status = #{preStatus}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="preContent != null and preContent != ''">
+                and pre_content = #{preContent}
+            </if>
+            <if test="context != null and context != ''">
+                and context = #{context}
+            </if>
+            <if test="preTicketStatus != null and preTicketStatus != ''">
+                and pre_ticket_status = #{preTicketStatus}
+            </if>
+            <if test="ticketStatus != null and ticketStatus != ''">
+                and ticket_status = #{ticketStatus}
+            </if>
+            <if test="preInAmount != null">
+                and pre_in_amount = #{preInAmount}
+            </if>
+            <if test="inAmount != null">
+                and in_amount = #{inAmount}
+            </if>
+            <if test="preArriveNotice != null and preArriveNotice != ''">
+                and pre_arrive_notice = #{preArriveNotice}
+            </if>
+            <if test="arriveNotice != null and arriveNotice != ''">
+                and arrive_notice = #{arriveNotice}
+            </if>
+            <if test="attach != null and attach != ''">
+                and attach = #{attach}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="accountRemark != null and accountRemark != ''">
+                and account_remark = #{accountRemark}
+            </if>
+            <if test="createBy != null">
+                and create_by = #{createBy}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryByOrderId" resultMap="BaseResultMap">
+        select
+          id, order_id, pre_attach, pre_remark, pre_account_remark, create_time, last_update_time, update_time, pre_status, status, pre_content, context, pre_ticket_status, ticket_status, pre_in_amount, in_amount, pre_arrive_notice, arrive_notice, attach, remark, account_remark, create_by
+        from work_order.order_log where order_id=#{orderId} order by create_time desc
+    </select>
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from order_log
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="preAttach != null and preAttach != ''">
+                and pre_attach = #{preAttach}
+            </if>
+            <if test="preRemark != null and preRemark != ''">
+                and pre_remark = #{preRemark}
+            </if>
+            <if test="preAccountRemark != null and preAccountRemark != ''">
+                and pre_account_remark = #{preAccountRemark}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="lastUpdateTime != null">
+                and last_update_time = #{lastUpdateTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="preStatus != null and preStatus != ''">
+                and pre_status = #{preStatus}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="preContent != null and preContent != ''">
+                and pre_content = #{preContent}
+            </if>
+            <if test="context != null and context != ''">
+                and context = #{context}
+            </if>
+            <if test="preTicketStatus != null and preTicketStatus != ''">
+                and pre_ticket_status = #{preTicketStatus}
+            </if>
+            <if test="ticketStatus != null and ticketStatus != ''">
+                and ticket_status = #{ticketStatus}
+            </if>
+            <if test="preInAmount != null">
+                and pre_in_amount = #{preInAmount}
+            </if>
+            <if test="inAmount != null">
+                and in_amount = #{inAmount}
+            </if>
+            <if test="preArriveNotice != null and preArriveNotice != ''">
+                and pre_arrive_notice = #{preArriveNotice}
+            </if>
+            <if test="arriveNotice != null and arriveNotice != ''">
+                and arrive_notice = #{arriveNotice}
+            </if>
+            <if test="attach != null and attach != ''">
+                and attach = #{attach}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="accountRemark != null and accountRemark != ''">
+                and account_remark = #{accountRemark}
+            </if>
+            <if test="createBy != null">
+                and create_by = #{createBy}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into order_log(order_id, pre_attach, pre_remark, pre_account_remark, create_time, last_update_time, update_time, pre_status, status, pre_content, context, pre_ticket_status, ticket_status, pre_in_amount, in_amount, pre_arrive_notice, arrive_notice, attach, remark, account_remark, create_by)
+        values (#{orderId}, #{preAttach}, #{preRemark}, #{preAccountRemark}, #{createTime}, #{lastUpdateTime}, #{updateTime}, #{preStatus}, #{status}, #{preContent}, #{context}, #{preTicketStatus}, #{ticketStatus}, #{preInAmount}, #{inAmount}, #{preArriveNotice}, #{arriveNotice}, #{attach}, #{remark}, #{accountRemark}, #{createBy})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into order_log(order_id, pre_attach, pre_remark, pre_account_remark, create_time, last_update_time, update_time, pre_status, status, pre_content, context, pre_ticket_status, ticket_status, pre_in_amount, in_amount, pre_arrive_notice, arrive_notice, attach, remark, account_remark, create_by)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.orderId}, #{entity.preAttach}, #{entity.preRemark}, #{entity.preAccountRemark}, #{entity.createTime}, #{entity.lastUpdateTime}, #{entity.updateTime}, #{entity.preStatus}, #{entity.status}, #{entity.preContent}, #{entity.context}, #{entity.preTicketStatus}, #{entity.ticketStatus}, #{entity.preInAmount}, #{entity.inAmount}, #{entity.preArriveNotice}, #{entity.arriveNotice}, #{entity.attach}, #{entity.remark}, #{entity.accountRemark}, #{entity.createBy})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into order_log(order_id, pre_attach, pre_remark, pre_account_remark, create_time, last_update_time, update_time, pre_status, status, pre_content, context, pre_ticket_status, ticket_status, pre_in_amount, in_amount, pre_arrive_notice, arrive_notice, attach, remark, account_remark, create_by)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.orderId}, #{entity.preAttach}, #{entity.preRemark}, #{entity.preAccountRemark}, #{entity.createTime}, #{entity.lastUpdateTime}, #{entity.updateTime}, #{entity.preStatus}, #{entity.status}, #{entity.preContent}, #{entity.context}, #{entity.preTicketStatus}, #{entity.ticketStatus}, #{entity.preInAmount}, #{entity.inAmount}, #{entity.preArriveNotice}, #{entity.arriveNotice}, #{entity.attach}, #{entity.remark}, #{entity.accountRemark}, #{entity.createBy})
+        </foreach>
+        on duplicate key update
+        order_id = values(order_id),
+        pre_attach = values(pre_attach),
+        pre_remark = values(pre_remark),
+        pre_account_remark = values(pre_account_remark),
+        create_time = values(create_time),
+        last_update_time = values(last_update_time),
+        update_time = values(update_time),
+        pre_status = values(pre_status),
+        status = values(status),
+        pre_content = values(pre_content),
+        context = values(context),
+        pre_ticket_status = values(pre_ticket_status),
+        ticket_status = values(ticket_status),
+        pre_in_amount = values(pre_in_amount),
+        in_amount = values(in_amount),
+        pre_arrive_notice = values(pre_arrive_notice),
+        arrive_notice = values(arrive_notice),
+        attach = values(attach),
+        remark = values(remark),
+        account_remark = values(account_remark),
+        create_by = values(create_by)
+    </insert>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from order_log where id = #{id}
+    </delete>
+
+</mapper>
+

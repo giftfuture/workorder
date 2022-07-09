@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 验证码过滤器
  * 
- * @author ycp
+ * @author
  */
 public class CaptchaValidateFilter extends AccessControlFilter
 {

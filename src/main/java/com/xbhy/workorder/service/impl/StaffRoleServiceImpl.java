@@ -2,7 +2,7 @@ package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.StaffRole;
-import com.xbhy.workorder.dao.StaffRoleDao;
+import com.xbhy.workorder.mapper.StaffRoleMapper;
 import com.xbhy.workorder.service.StaffRoleService;
 import com.xbhy.workorder.vo.StaffRoleVO;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import java.util.List;
 @Service("staffRoleService")
 public class StaffRoleServiceImpl implements StaffRoleService {
     @Resource
-    private StaffRoleDao staffRoleDao;
+    private StaffRoleMapper staffRoleMapper;
 
     /**
      * 通过ID查询单条数据
@@ -32,12 +32,12 @@ public class StaffRoleServiceImpl implements StaffRoleService {
      */
     @Override
     public StaffRoleVO queryById(Long id) {
-        return BeanUtil.copyProperties(this.staffRoleDao.queryById(id),StaffRoleVO.class);
+        return BeanUtil.copyProperties(this.staffRoleMapper.queryById(id),StaffRoleVO.class);
     }
 
     @Override
     public List<StaffRoleVO> queryByStaffId(Long staffId) {
-        return BeanUtil.copyToList(staffRoleDao.queryByStaffId(staffId),StaffRoleVO.class);
+        return BeanUtil.copyToList(staffRoleMapper.queryByStaffId(staffId),StaffRoleVO.class);
     }
 
     /**
@@ -50,8 +50,8 @@ public class StaffRoleServiceImpl implements StaffRoleService {
     @Override
     public Page<StaffRoleVO> queryByPage(StaffRoleVO staffRoleVO, PageRequest pageRequest) {
         StaffRole staffRole = BeanUtil.copyProperties(staffRoleVO,StaffRole.class);
-        long total = this.staffRoleDao.count(staffRole);
-        return new PageImpl<>(BeanUtil.copyToList(this.staffRoleDao.queryAllByLimit(staffRole, pageRequest),StaffRoleVO.class), pageRequest, total);
+        long total = this.staffRoleMapper.count(staffRole);
+        return new PageImpl<>(BeanUtil.copyToList(this.staffRoleMapper.queryAllByLimit(staffRole, pageRequest),StaffRoleVO.class), pageRequest, total);
     }
 
     /**
@@ -62,7 +62,7 @@ public class StaffRoleServiceImpl implements StaffRoleService {
      */
     @Override
     public StaffRoleVO insert(StaffRoleVO staffRoleVO) {
-        this.staffRoleDao.insert(BeanUtil.copyProperties(staffRoleVO,StaffRole.class));
+        this.staffRoleMapper.insert(BeanUtil.copyProperties(staffRoleVO,StaffRole.class));
         return staffRoleVO;
     }
 
@@ -74,7 +74,7 @@ public class StaffRoleServiceImpl implements StaffRoleService {
      */
     @Override
     public StaffRoleVO update(StaffRoleVO staffRoleVO) {
-        this.staffRoleDao.update(BeanUtil.copyProperties(staffRoleVO,StaffRole.class));
+        this.staffRoleMapper.update(BeanUtil.copyProperties(staffRoleVO,StaffRole.class));
         return this.queryById(staffRoleVO.getId());
     }
 
@@ -86,6 +86,6 @@ public class StaffRoleServiceImpl implements StaffRoleService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return this.staffRoleDao.deleteById(id) > 0;
+        return this.staffRoleMapper.deleteById(id) > 0;
     }
 }

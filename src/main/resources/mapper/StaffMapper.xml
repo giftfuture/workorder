@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xbhy.workorder.mapper.StaffMapper">
+
+    <resultMap id="BaseResultMap" type="com.xbhy.workorder.entity.Staff">
+        <!--@Table staff-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="staffName" column="staff_name" jdbcType="VARCHAR"/>
+        <result property="passwd" column="passwd" jdbcType="VARCHAR"/>
+        <result property="idCard" column="id_card" jdbcType="VARCHAR"/>
+        <result property="staffNo" column="staff_no" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="birth" column="birth" jdbcType="TIMESTAMP"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
+        <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+        <result property="enName" column="en_name" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="loginIp" column="login_IP" jdbcType="VARCHAR"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, staff_name, id_card, staff_no, gender, birth, phone, status, login_name, en_name, email, login_IP, login_time
+        from staff
+        where id = #{id}
+    </select>
+    <select id="selectByLoginName" resultMap="BaseResultMap">
+        select id, staff_name, id_card, staff_no, gender, birth, phone, status, login_name, en_name, email, create_by, login_IP, login_time
+        from staff where login_name = #{loginName}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, staff_name, id_card, staff_no, gender, birth, phone, status, login_name, en_name, email, login_IP, login_time
+        from staff
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="staffName != null and staffName != ''">
+                and staff_name = #{staffName}
+            </if>
+
+            <if test="idCard != null and idCard != ''">
+                and id_card = #{idCard}
+            </if>
+            <if test="staffNo != null and staffNo != ''">
+                and staff_no = #{staffNo}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="birth != null">
+                and birth = #{birth}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and login_name = #{loginName}
+            </if>
+            <if test="enName != null and enName != ''">
+                and en_name = #{enName}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="createBy != null">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null">
+                and update_by = #{updateBy}
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                and login_IP = #{loginIp}
+            </if>
+            <if test="loginTime != null">
+                and login_time = #{loginTime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+    <select id="fetchAll" resultMap="BaseResultMap">
+        select
+            id, staff_name, id_card, staff_no, gender, birth, phone, status,login_name, en_name, email, create_by, login_IP, login_time
+        from work_order.staff
+    </select>
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="java.util.Map">
+        select id, staff_name from work_order.staff where deleted = 0
+    </select>
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from staff
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="staffName != null and staffName != ''">
+                and staff_name = #{staffName}
+            </if>
+            <if test="passwd != null and passwd != ''">
+                and passwd = #{passwd}
+            </if>
+            <if test="idCard != null and idCard != ''">
+                and id_card = #{idCard}
+            </if>
+            <if test="staffNo != null and staffNo != ''">
+                and staff_no = #{staffNo}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="birth != null">
+                and birth = #{birth}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and login_name = #{loginName}
+            </if>
+            <if test="enName != null and enName != ''">
+                and en_name = #{enName}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="createBy != null">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null">
+                and update_by = #{updateBy}
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                and login_IP = #{loginIp}
+            </if>
+            <if test="loginTime != null">
+                and login_time = #{loginTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into staff(staff_name, passwd, id_card, staff_no, gender, birth, phone, status, update_time, deleted, login_name, en_name, email, create_by, create_time, update_by, login_IP, login_time)
+        values (#{staffName}, #{passwd}, #{idCard}, #{staffNo}, #{gender}, #{birth}, #{phone}, #{status}, #{updateTime}, #{deleted}, #{loginName}, #{engName}, #{email}, #{createBy}, #{createTime}, #{updateBy}, #{loginIp}, #{loginTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into staff(staff_name, passwd, id_card, staff_no, gender, birth, phone, status, update_time, deleted, login_name, en_name, email, create_by, create_time, update_by, login_IP, login_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.staffName}, #{entity.passwd}, #{entity.idCard}, #{entity.staffNo}, #{entity.gender}, #{entity.birth}, #{entity.phone}, #{entity.status}, #{entity.updateTime}, #{entity.deleted}, #{entity.loginName}, #{entity.engName}, #{entity.email}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.loginIp}, #{entity.loginTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into staff(staff_name, passwd, id_card, staff_no, gender, birth, phone, status, update_time, deleted, login_name, en_name, email, create_by, create_time, update_by, login_IP, login_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.staffName}, #{entity.passwd}, #{entity.idCard}, #{entity.staffNo}, #{entity.gender}, #{entity.birth}, #{entity.phone}, #{entity.status}, #{entity.updateTime}, #{entity.deleted}, #{entity.loginName}, #{entity.enName}, #{entity.email}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.loginIp}, #{entity.loginTime})
+        </foreach>
+        on duplicate key update
+        staff_name = values(staff_name),
+        passwd = values(passwd),
+        id_card = values(id_card),
+        staff_no = values(staff_no),
+        gender = values(gender),
+        birth = values(birth),
+        phone = values(phone),
+        status = values(status),
+        update_time = values(update_time),
+        deleted = values(deleted),
+        login_name = values(login_name),
+        en_name = values(en_name),
+        email = values(email),
+        create_by = values(create_by),
+        create_time = values(create_time),
+        update_by = values(update_by),
+        login_IP = values(login_IP),
+        login_time = values(login_time)
+    </insert>
+
+    <update id="updatePwd">
+        update staff set passwd=#{passwd},update_by = #{updateBy} where login_name =#{loginName}
+    </update>
+    <!--通过主键修改数据-->
+    <update id="update">
+        update staff
+        <set>
+            <if test="staffName != null and staffName != ''">
+                staff_name = #{staffName},
+            </if>
+            <if test="idCard != null and idCard != ''">
+                id_card = #{idCard},
+            </if>
+            <if test="staffNo != null and staffNo != ''">
+                staff_no = #{staffNo},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="birth != null">
+                birth = #{birth},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="loginName != null and loginName != ''">
+                login_name = #{loginName},
+            </if>
+            <if test="enName != null and enName != ''">
+                en_name = #{enName},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                login_IP = #{loginIp},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <update id="deleteById">
+        update staff set deleted =1 where id = #{id}
+    </update>
+
+</mapper>
+

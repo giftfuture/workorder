@@ -2,7 +2,7 @@ package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.OrderSort;
-import com.xbhy.workorder.dao.OrderSortDao;
+import com.xbhy.workorder.mapper.OrderSortMapper;
 import com.xbhy.workorder.service.OrderSortService;
 import com.xbhy.workorder.vo.OrderSortVO;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ import java.util.List;
 public class OrderSortServiceImpl implements OrderSortService {
 
     @Resource
-    private OrderSortDao orderSortDao;
+    private OrderSortMapper orderSortMapper;
 
     /**
      * 通过ID查询单条数据
@@ -39,7 +39,7 @@ public class OrderSortServiceImpl implements OrderSortService {
      */
     @Override
     public OrderSortVO queryById(Long id) {
-        return BeanUtil.copyProperties(this.orderSortDao.queryById(id),OrderSortVO.class);
+        return BeanUtil.copyProperties(this.orderSortMapper.queryById(id),OrderSortVO.class);
     }
 
     /**
@@ -52,8 +52,8 @@ public class OrderSortServiceImpl implements OrderSortService {
     @Override
     public Page<OrderSortVO> queryByPage(OrderSortVO orderSortVO, PageRequest pageRequest) {
         OrderSort orderSort = BeanUtil.copyProperties(orderSortVO,OrderSort.class);
-        long total = this.orderSortDao.count(orderSort);
-        return new PageImpl<>(BeanUtil.copyToList(this.orderSortDao.queryAllByLimit(orderSort, pageRequest),OrderSortVO.class), pageRequest, total);
+        long total = this.orderSortMapper.count(orderSort);
+        return new PageImpl<>(BeanUtil.copyToList(this.orderSortMapper.queryAllByLimit(orderSort, pageRequest),OrderSortVO.class), pageRequest, total);
     }
 
     /**
@@ -62,7 +62,7 @@ public class OrderSortServiceImpl implements OrderSortService {
      */
     @Override
     public List<OrderSortVO> fetchAll() {
-        return BeanUtil.copyToList(orderSortDao.fetchAll(),OrderSortVO.class);
+        return BeanUtil.copyToList(orderSortMapper.fetchAll(),OrderSortVO.class);
     }
 
     /**
@@ -73,7 +73,7 @@ public class OrderSortServiceImpl implements OrderSortService {
      */
     @Override
     public OrderSortVO insert(OrderSortVO orderSortVO) {
-        this.orderSortDao.insert(BeanUtil.copyProperties(orderSortVO,OrderSort.class));
+        this.orderSortMapper.insert(BeanUtil.copyProperties(orderSortVO,OrderSort.class));
         return orderSortVO;
     }
 
@@ -85,7 +85,7 @@ public class OrderSortServiceImpl implements OrderSortService {
      */
     @Override
     public OrderSortVO update(OrderSortVO orderSortVO) {
-        this.orderSortDao.update(BeanUtil.copyProperties(orderSortVO,OrderSort.class));
+        this.orderSortMapper.update(BeanUtil.copyProperties(orderSortVO,OrderSort.class));
         return this.queryById(orderSortVO.getId());
     }
 
@@ -97,6 +97,6 @@ public class OrderSortServiceImpl implements OrderSortService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return this.orderSortDao.deleteById(id) > 0;
+        return this.orderSortMapper.deleteById(id) > 0;
     }
 }

@@ -48,14 +48,6 @@ public interface OrderLogService {
     OrderLogVO insert(OrderLogVO orderLogVO);
 
     /**
-     * 修改数据
-     *
-     * @param orderLogVO 实例对象
-     * @return 实例对象
-     */
-    OrderLogVO update(OrderLogVO orderLogVO);
-
-    /**
      * 通过主键删除数据
      *
      * @param id 主键

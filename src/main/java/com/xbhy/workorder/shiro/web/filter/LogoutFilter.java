@@ -1,9 +1,7 @@
 package com.xbhy.workorder.shiro.web.filter;
 
 
-import com.xbhy.workorder.component.AsyncManager;
 import com.xbhy.workorder.constant.ShiroConstants;
-import com.xbhy.workorder.util.MessageUtils;
 import com.xbhy.workorder.util.ShiroUtils;
 import com.xbhy.workorder.vo.StaffVO;
 import org.apache.commons.lang3.StringUtils;

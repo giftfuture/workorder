@@ -7,10 +7,18 @@ import com.xbhy.workorder.exception.user.*;
 import com.xbhy.workorder.service.StaffService;
 import com.xbhy.workorder.util.*;
 import com.xbhy.workorder.vo.StaffVO;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.config.ConfigurationException;
+import org.apache.shiro.io.ResourceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 
 /**
@@ -102,4 +110,5 @@ public class SysLoginService {
         staffVO.setLoginTime(DateUtils.getNowDate());
         staffService.update(staffVO);
     }
+
 }

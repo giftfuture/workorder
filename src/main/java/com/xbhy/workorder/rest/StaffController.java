@@ -33,8 +33,6 @@ import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.xbhy.workorder.vo.AjaxResult.error;
-import static com.xbhy.workorder.vo.AjaxResult.success;
 
 /**
  * (Staff)表控制层

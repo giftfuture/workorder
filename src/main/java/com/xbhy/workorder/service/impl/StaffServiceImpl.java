@@ -2,7 +2,7 @@ package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.Staff;
-import com.xbhy.workorder.dao.StaffDao;
+import com.xbhy.workorder.mapper.StaffMapper;
 import com.xbhy.workorder.service.StaffService;
 import com.xbhy.workorder.util.ShiroUtils;
 import com.xbhy.workorder.vo.ResetPwdVO;
@@ -33,11 +33,11 @@ import java.util.Map;
 @Service("staffService")
 public class StaffServiceImpl implements StaffService {
     @Resource
-    private StaffDao staffDao;
+    private StaffMapper staffMapper;
 
     @Override
     public List<Staff> fetchAll() {
-        return staffDao.fetchAll();
+        return staffMapper.fetchAll();
     }
 
     /**
@@ -46,7 +46,7 @@ public class StaffServiceImpl implements StaffService {
      */
     @Override
     public Map<Long,String> queryAll() {
-        return staffDao.queryAll();
+        return staffMapper.queryAll();
     }
 
     /**
@@ -58,7 +58,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Boolean resetPwd(ResetPwdVO resetPwdVO) {
         Staff staff = Staff.builder().passwd(BCrypt.hashpw(resetPwdVO.getNewPwd(), BCrypt.gensalt())).loginName(resetPwdVO.getLoginName()).updateBy(ShiroUtils.getStaffId()).build();
-        return staffDao.updatePwd(staff) > 0;
+        return staffMapper.updatePwd(staff) > 0;
     }
 
     /**
@@ -69,7 +69,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Boolean updatePwd(UpdatePwdVO updatePwdVO) {
         Staff staff = Staff.builder().passwd(BCrypt.hashpw(updatePwdVO.getNewPwd(), BCrypt.gensalt())).loginName(updatePwdVO.getLoginName()).updateBy(ShiroUtils.getStaffId()).build();
-        return staffDao.updatePwd(staff) > 0;
+        return staffMapper.updatePwd(staff) > 0;
     }
 
     /**
@@ -89,7 +89,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public StaffVO selectByLoginName(String loginName) {
-        return BeanUtil.copyProperties(staffDao.selectByLoginName(loginName),StaffVO.class);
+        return BeanUtil.copyProperties(staffMapper.selectByLoginName(loginName),StaffVO.class);
     }
 
     /**
@@ -100,7 +100,7 @@ public class StaffServiceImpl implements StaffService {
      */
     @Override
     public StaffVO queryById(Long id) {
-        return BeanUtil.copyProperties(this.staffDao.queryById(id),StaffVO.class);
+        return BeanUtil.copyProperties(this.staffMapper.queryById(id),StaffVO.class);
     }
 
     /**
@@ -113,8 +113,8 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Page<StaffVO> queryByPage(StaffVO staffVO, PageRequest pageRequest) {
         Staff staff = BeanUtil.copyProperties(staffVO,Staff.class);
-        long total = this.staffDao.count(staff);
-        return new PageImpl<>(BeanUtil.copyToList(this.staffDao.queryAllByLimit(staff, pageRequest),StaffVO.class), pageRequest, total);
+        long total = this.staffMapper.count(staff);
+        return new PageImpl<>(BeanUtil.copyToList(this.staffMapper.queryAllByLimit(staff, pageRequest),StaffVO.class), pageRequest, total);
     }
 
     /**
@@ -125,7 +125,7 @@ public class StaffServiceImpl implements StaffService {
      */
     @Override
     public StaffVO insert(StaffVO staffVO) {
-        this.staffDao.insert(BeanUtil.copyProperties(staffVO,Staff.class));
+        this.staffMapper.insert(BeanUtil.copyProperties(staffVO,Staff.class));
         return staffVO;
     }
 
@@ -137,7 +137,7 @@ public class StaffServiceImpl implements StaffService {
      */
     @Override
     public StaffVO update(StaffVO staffVO) {
-        this.staffDao.update(BeanUtil.copyProperties(staffVO,Staff.class));
+        this.staffMapper.update(BeanUtil.copyProperties(staffVO,Staff.class));
         return this.queryById(staffVO.getId());
     }
 
@@ -149,6 +149,6 @@ public class StaffServiceImpl implements StaffService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return this.staffDao.deleteById(id) > 0;
+        return this.staffMapper.deleteById(id) > 0;
     }
 }

@@ -1,14 +1,28 @@
 server:
   port: 8888
-
-
-# Mybatis
-mybatis:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  tomcat:
+    uri-encoding: UTF-8
+http:
+  encoding:
+    charset: utf-8
+    enabled: true
 
 # 数据源连接
 spring:
+  server:
+    minSpareThreads: 50
+    protocol: org.apache.coyote.http11.Http11NioProtocol
+    maxSpareThreads: 50
+    port: 8122
+    maxFileSize: 300MB
+    maxHttpHeaderSize: 3145728
+    redirectPort: 443
+    maxRequestSize: 500MB
+    acceptorThreadCount: 4
+    maxThreads: 1000
+    maxConnections: 10000
+    compression: on
+    connectionTimeout: 180000
   #main:
   #  allow-circular-references: true
   datasource:
@@ -33,24 +47,36 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000  # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
 
 # 分页插件
-pagehelper:
-  helperDialect:  mysql
-  reasonable: true
-  supportMethodsArguments:  true
-  params: count=countSql
+#pagehelper:
+#  helperDialect:  mysql
+#  reasonable: true
+#  supportMethodsArguments:  true
+#  params: count=countSql
+# Mybatis
 
 
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.xbhy.workorder.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+mapper:
+  mappers: com.xbhy.workorder.mapper.BaseMapper
+  not-empty: false
+  identity: MYSQL
 # log4j
 logging:
   file:
     name: ./log/work-order.log
-  level:
-    root: info
-    org.springframework: info
-    org.mybatis: info
-    org.zuel.lkq: error
-    config: classpath:logback-spring.xml
-    com.xbhy.workorder.dao: debug
+  config: classpath:logback-spring.xml
+#  level:
+#    root: info
+#    org.springframework: info
+#    org.mybatis: info
+#    org.zuel.lkq: error
+#    com.xbhy.workorder.mapper: debug
 # 变量配置
 regex:
   email: ^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2,3})?)$
@@ -58,7 +84,7 @@ regex:
 
 
 
-attachUrl: E:\\workorder\\attaches\\
+
 #是否开启 swagger-ui
 swagger:
   enabled: true
@@ -68,7 +94,7 @@ xss:
   # 过滤开关
   enabled: true
   # 排除链接（多个用逗号分隔）
-  excludes: /system/notice/*
+  excludes: /system/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
 #shiro:
@@ -113,11 +139,7 @@ shiro:
     # 踢出之前登录的/之后登录的用户，默认踢出之前登录的用户
     kickoutAfter: false
 
-http:
-  encoding:
-    charset: utf-8
-    enabled: true
-
+attachUrl: E:\\workorder\\attaches\\
 staff:
   loginNameIndex: "该登录名用户已存在"
   mobileIndex: "手机号已存在"
@@ -134,5 +156,9 @@ staff:
   loginNamePwdNotMatch: "用户名和密码不匹配！"
   retryLimitCount: "登录超过最大输入次数！"
   inValidVerifyCode: "验证码不正确！"
+  maxRetryCount: 5
   jcaptcha:
     error: "验证码错误"
+record:
+  file:
+    path: E:\\workorder\\attaches\\

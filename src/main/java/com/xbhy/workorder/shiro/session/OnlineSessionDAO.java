@@ -1,8 +1,8 @@
 package com.xbhy.workorder.shiro.session;
 
-import com.xbhy.workorder.component.AsyncManager;
 import com.xbhy.workorder.enums.OnlineStatus;
-import com.xbhy.workorder.schedule.factory.AsyncFactory;
+import com.xbhy.workorder.schedule.AsyncFactory;
+import com.xbhy.workorder.schedule.AsyncManager;
 import com.xbhy.workorder.shiro.service.SysShiroService;
 import com.xbhy.workorder.vo.StaffSessionVO;
 import org.apache.shiro.session.Session;

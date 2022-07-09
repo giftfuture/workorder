@@ -1,9 +1,8 @@
 package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.google.common.collect.Lists;
 import com.xbhy.workorder.entity.FileInfo;
-import com.xbhy.workorder.dao.FileInfoDao;
+import com.xbhy.workorder.mapper.FileInfoMapper;
 import com.xbhy.workorder.service.FileInfoService;
 import com.xbhy.workorder.vo.FileInfoVO;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ import java.util.List;
 @Service("fileInfoService")
 public class FileInfoServiceImpl implements FileInfoService {
     @Resource
-    private FileInfoDao fileInfoDao;
+    private FileInfoMapper fileInfoDao;
 
     /**
      * 通过ID查询单条数据

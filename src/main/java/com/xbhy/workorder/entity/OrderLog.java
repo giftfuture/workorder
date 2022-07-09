@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,7 +23,8 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderLog implements Serializable {
     private static final long serialVersionUID = -51591202592665781L;
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
      * 工单ID

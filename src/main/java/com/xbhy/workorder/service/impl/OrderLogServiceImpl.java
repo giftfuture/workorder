@@ -2,7 +2,7 @@ package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.OrderLog;
-import com.xbhy.workorder.dao.OrderLogDao;
+import com.xbhy.workorder.mapper.OrderLogMapper;
 import com.xbhy.workorder.service.OrderLogService;
 import com.xbhy.workorder.vo.OrderLogVO;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import java.util.List;
 @Service("orderLogService")
 public class OrderLogServiceImpl implements OrderLogService {
     @Resource
-    private OrderLogDao orderLogDao;
+    private OrderLogMapper orderLogMapper;
 
     /**
      * 通过ID查询单条数据
@@ -32,7 +32,7 @@ public class OrderLogServiceImpl implements OrderLogService {
      */
     @Override
     public OrderLogVO queryById(Long id) {
-        return BeanUtil.copyProperties(this.orderLogDao.queryById(id),OrderLogVO.class);
+        return BeanUtil.copyProperties(this.orderLogMapper.queryById(id),OrderLogVO.class);
     }
 
     /**
@@ -42,7 +42,7 @@ public class OrderLogServiceImpl implements OrderLogService {
      */
     @Override
     public List<OrderLogVO> queryByOrderId(Long orderId) {
-        return BeanUtil.copyToList(orderLogDao.queryByOrderId(orderId),OrderLogVO.class);
+        return BeanUtil.copyToList(orderLogMapper.queryByOrderId(orderId),OrderLogVO.class);
     }
 
     /**
@@ -55,8 +55,8 @@ public class OrderLogServiceImpl implements OrderLogService {
     @Override
     public Page<OrderLogVO> queryByPage(OrderLogVO orderLogVO, PageRequest pageRequest) {
         OrderLog orderLog = BeanUtil.copyProperties(orderLogVO, OrderLog.class);
-        long total = this.orderLogDao.count(orderLog);
-        return new PageImpl<>(BeanUtil.copyToList(this.orderLogDao.queryAllByLimit(orderLog, pageRequest),OrderLogVO.class), pageRequest, total);
+        long total = this.orderLogMapper.count(orderLog);
+        return new PageImpl<>(BeanUtil.copyToList(this.orderLogMapper.queryAllByLimit(orderLog, pageRequest),OrderLogVO.class), pageRequest, total);
     }
 
     /**
@@ -67,20 +67,8 @@ public class OrderLogServiceImpl implements OrderLogService {
      */
     @Override
     public OrderLogVO insert(OrderLogVO orderLogVO) {
-        this.orderLogDao.insert(BeanUtil.copyProperties(orderLogVO,OrderLog.class));
+        this.orderLogMapper.insert(BeanUtil.copyProperties(orderLogVO,OrderLog.class));
         return orderLogVO;
-    }
-
-    /**
-     * 修改数据
-     *
-     * @param orderLogVO 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public OrderLogVO update(OrderLogVO orderLogVO) {
-        this.orderLogDao.update(BeanUtil.copyProperties(orderLogVO,OrderLog.class));
-        return this.queryById(orderLogVO.getId());
     }
 
     /**
@@ -91,6 +79,6 @@ public class OrderLogServiceImpl implements OrderLogService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return this.orderLogDao.deleteById(id) > 0;
+        return this.orderLogMapper.deleteById(id) > 0;
     }
 }

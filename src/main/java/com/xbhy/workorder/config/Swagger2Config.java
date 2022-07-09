@@ -36,7 +36,7 @@ public class Swagger2Config {
         ParameterBuilder ticketPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
         // "Authorization"
-        ticketPar.name("X-ZUEL-DEMO-Token").description("token")
+        ticketPar.name("X-xbhy-Token").description("token")
                 .modelRef(new ModelRef("string"))
                 .parameterType("header")
                 .defaultValue("token" + " ")

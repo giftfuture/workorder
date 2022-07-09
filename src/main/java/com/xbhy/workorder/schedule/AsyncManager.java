@@ -1,7 +1,6 @@
 package com.xbhy.workorder.schedule;
 
 
-import com.xbhy.workorder.component.Threads;
 import com.xbhy.workorder.util.SpringUtils;
 
 import java.util.TimerTask;

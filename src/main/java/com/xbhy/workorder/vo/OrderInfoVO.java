@@ -1,5 +1,6 @@
 package com.xbhy.workorder.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -83,15 +84,18 @@ public class OrderInfoVO implements Serializable {
     /**
      * 创建时间 
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 创建时间开始(用于检索)
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTimeBegin;
     /**
      * 创建时间结束(用于检索)
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTimeEnd;
     /**
      * 对账备注
@@ -128,6 +132,7 @@ public class OrderInfoVO implements Serializable {
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
 

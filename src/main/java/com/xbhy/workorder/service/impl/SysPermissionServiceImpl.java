@@ -2,7 +2,7 @@ package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.SysPermission;
-import com.xbhy.workorder.dao.SysPermissionDao;
+import com.xbhy.workorder.mapper.SysPermissionMapper;
 import com.xbhy.workorder.service.SysPermissionService;
 import com.xbhy.workorder.vo.SysPermissionVO;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (SysPermission)表服务实现类
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
 @Service("sysPermissionService")
 public class SysPermissionServiceImpl implements SysPermissionService {
     @Resource
-    private SysPermissionDao sysPermissionDao;
+    private SysPermissionMapper sysPermissionMapper;
 
     /**
      * 通过ID查询单条数据
@@ -31,7 +32,17 @@ public class SysPermissionServiceImpl implements SysPermissionService {
      */
     @Override
     public SysPermissionVO queryById(Integer id) {
-        return BeanUtil.copyProperties(this.sysPermissionDao.queryById(id),SysPermissionVO.class);
+        return BeanUtil.copyProperties(this.sysPermissionMapper.queryById(id),SysPermissionVO.class);
+    }
+
+    /**
+     * 通过角色获取权限
+     * @param roleId
+     * @return
+     */
+    @Override
+    public List<SysPermissionVO> queryByRoleId(Integer roleId) {
+        return BeanUtil.copyToList(this.sysPermissionMapper.queryByRoleId(roleId),SysPermissionVO.class);
     }
 
     /**
@@ -44,8 +55,8 @@ public class SysPermissionServiceImpl implements SysPermissionService {
     @Override
     public Page<SysPermissionVO> queryByPage(SysPermissionVO sysPermissionVO, PageRequest pageRequest) {
         SysPermission sysPermission = BeanUtil.copyProperties(sysPermissionVO, SysPermission.class);
-        long total = this.sysPermissionDao.count(sysPermission);
-        return new PageImpl<>(BeanUtil.copyToList(this.sysPermissionDao.queryAllByLimit(sysPermission, pageRequest),SysPermissionVO.class), pageRequest, total);
+        long total = this.sysPermissionMapper.count(sysPermission);
+        return new PageImpl<>(BeanUtil.copyToList(this.sysPermissionMapper.queryAllByLimit(sysPermission, pageRequest),SysPermissionVO.class), pageRequest, total);
     }
 
     /**
@@ -56,7 +67,7 @@ public class SysPermissionServiceImpl implements SysPermissionService {
      */
     @Override
     public SysPermissionVO insert(SysPermissionVO sysPermissionVO) {
-        this.sysPermissionDao.insert(BeanUtil.copyProperties(sysPermissionVO,SysPermission.class));
+        this.sysPermissionMapper.insert(BeanUtil.copyProperties(sysPermissionVO,SysPermission.class));
         return sysPermissionVO;
     }
 
@@ -68,7 +79,7 @@ public class SysPermissionServiceImpl implements SysPermissionService {
      */
     @Override
     public SysPermissionVO update(SysPermissionVO sysPermissionVO) {
-        this.sysPermissionDao.update(BeanUtil.copyProperties(sysPermissionVO,SysPermission.class));
+        this.sysPermissionMapper.update(BeanUtil.copyProperties(sysPermissionVO,SysPermission.class));
         return this.queryById(sysPermissionVO.getId());
     }
 
@@ -80,6 +91,6 @@ public class SysPermissionServiceImpl implements SysPermissionService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        return this.sysPermissionDao.deleteById(id) > 0;
+        return this.sysPermissionMapper.deleteById(id) > 0;
     }
 }

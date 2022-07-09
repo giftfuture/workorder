@@ -2,7 +2,7 @@ package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.SysRole;
-import com.xbhy.workorder.dao.SysRoleDao;
+import com.xbhy.workorder.mapper.SysRoleMapper;
 import com.xbhy.workorder.service.SysRoleService;
 import com.xbhy.workorder.vo.SysRoleVO;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 @Service("sysRoleService")
 public class SysRoleServiceImpl implements SysRoleService {
     @Resource
-    private SysRoleDao sysRoleDao;
+    private SysRoleMapper sysRoleMapper;
 
     /**
      * 通过ID查询单条数据
@@ -31,7 +31,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      */
     @Override
     public SysRoleVO queryById(Integer roleId) {
-        return BeanUtil.copyProperties(this.sysRoleDao.queryById(roleId),SysRoleVO.class);
+        return BeanUtil.copyProperties(this.sysRoleMapper.queryById(roleId),SysRoleVO.class);
     }
 
     /**
@@ -44,8 +44,8 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public Page<SysRoleVO> queryByPage(SysRoleVO sysRoleVO, PageRequest pageRequest) {
         SysRole sysRole = BeanUtil.copyProperties(sysRoleVO,SysRole.class);
-        long total = this.sysRoleDao.count(sysRole);
-        return new PageImpl<>(BeanUtil.copyToList(this.sysRoleDao.queryAllByLimit(sysRole, pageRequest),SysRoleVO.class), pageRequest, total);
+        long total = this.sysRoleMapper.count(sysRole);
+        return new PageImpl<>(BeanUtil.copyToList(this.sysRoleMapper.queryAllByLimit(sysRole, pageRequest),SysRoleVO.class), pageRequest, total);
     }
 
     /**
@@ -56,7 +56,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      */
     @Override
     public SysRoleVO insert(SysRoleVO sysRoleVO) {
-        this.sysRoleDao.insert(BeanUtil.copyProperties(sysRoleVO,SysRole.class));
+        this.sysRoleMapper.insert(BeanUtil.copyProperties(sysRoleVO,SysRole.class));
         return sysRoleVO;
     }
 
@@ -68,7 +68,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      */
     @Override
     public SysRoleVO update(SysRoleVO sysRoleVO) {
-        this.sysRoleDao.update(BeanUtil.copyProperties(sysRoleVO,SysRole.class));
+        this.sysRoleMapper.update(BeanUtil.copyProperties(sysRoleVO,SysRole.class));
         return this.queryById(sysRoleVO.getRoleId());
     }
 
@@ -80,6 +80,6 @@ public class SysRoleServiceImpl implements SysRoleService {
      */
     @Override
     public boolean deleteById(Integer roleId) {
-        return this.sysRoleDao.deleteById(roleId) > 0;
+        return this.sysRoleMapper.deleteById(roleId) > 0;
     }
 }

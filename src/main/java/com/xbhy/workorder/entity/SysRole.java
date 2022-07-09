@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.io.Serializable;
 import java.util.List;
@@ -24,6 +27,8 @@ public class SysRole implements Serializable {
     /**
      * 角色ID
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
     /**
      * 角色名称

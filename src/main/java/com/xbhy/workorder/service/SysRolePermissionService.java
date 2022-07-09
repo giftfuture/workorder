@@ -5,6 +5,8 @@ import com.xbhy.workorder.vo.SysRolePermissionVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * (SysRolePermission)表服务接口
  *
@@ -21,6 +23,7 @@ public interface SysRolePermissionService {
      */
     SysRolePermissionVO queryById(Integer id);
 
+   
     /**
      * 分页查询
      *

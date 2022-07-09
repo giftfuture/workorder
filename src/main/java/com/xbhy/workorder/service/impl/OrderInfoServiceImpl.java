@@ -1,10 +1,9 @@
 package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xbhy.workorder.entity.OrderInfo;
-import com.xbhy.workorder.dao.OrderInfoDao;
+import com.xbhy.workorder.mapper.OrderInfoMapper;
 import com.xbhy.workorder.enums.OrderSortEnum;
 import com.xbhy.workorder.service.OrderInfoService;
 import com.xbhy.workorder.util.ArgumentUtil;
@@ -38,7 +37,7 @@ import java.util.stream.Collectors;
 @Service("orderInfoService")
 public class OrderInfoServiceImpl implements OrderInfoService {
     @Resource
-    private OrderInfoDao orderInfoDao;
+    private OrderInfoMapper orderInfoMapper;
 
     /**
      * 通过ID查询单条数据
@@ -48,7 +47,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
      */
     @Override
     public OrderInfoVO queryById(Long id) {
-        return BeanUtil.copyProperties(this.orderInfoDao.queryById(id), OrderInfoVO.class);
+        return BeanUtil.copyProperties(this.orderInfoMapper.queryById(id), OrderInfoVO.class);
     }
 
     /**
@@ -103,8 +102,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             }
             }
         }
-        long total = this.orderInfoDao.count(orderInfo);
-        return new PageImpl<>(BeanUtil.copyToList(this.orderInfoDao.queryAllByLimit(orderInfo, pageRequest), OrderInfoVO.class), pageRequest, total);
+        long total = this.orderInfoMapper.count(orderInfo);
+        return new PageImpl<>(BeanUtil.copyToList(this.orderInfoMapper.queryAllByLimit(orderInfo, pageRequest), OrderInfoVO.class), pageRequest, total);
     }
 
 
@@ -160,8 +159,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
                 }
             }
         }
-        long total = this.orderInfoDao.count(orderInfo);
-        return new PageImpl<>(BeanUtil.copyToList(this.orderInfoDao.queryAllByLimit(orderInfo, pageRequest), OrderInfoVO.class), pageRequest, total);
+        long total = this.orderInfoMapper.count(orderInfo);
+        return new PageImpl<>(BeanUtil.copyToList(this.orderInfoMapper.queryAllByLimit(orderInfo, pageRequest), OrderInfoVO.class), pageRequest, total);
     }
     /**
      * 新增数据
@@ -171,7 +170,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
      */
     @Override
     public OrderInfoVO insert(OrderInfoVO orderInfoVO) {
-        this.orderInfoDao.insert(BeanUtil.copyProperties(orderInfoVO,OrderInfo.class));
+        this.orderInfoMapper.insert(BeanUtil.copyProperties(orderInfoVO,OrderInfo.class));
         return orderInfoVO;
     }
 
@@ -183,7 +182,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
      */
     @Override
     public OrderInfoVO update(OrderInfoVO orderInfoVO) {
-        this.orderInfoDao.update(BeanUtil.copyProperties(orderInfoVO,OrderInfo.class));
+        this.orderInfoMapper.update(BeanUtil.copyProperties(orderInfoVO,OrderInfo.class));
         return this.queryById(orderInfoVO.getId());
     }
 
@@ -195,6 +194,6 @@ public class OrderInfoServiceImpl implements OrderInfoService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return this.orderInfoDao.deleteById(id) > 0;
+        return this.orderInfoMapper.deleteById(id) > 0;
     }
 }

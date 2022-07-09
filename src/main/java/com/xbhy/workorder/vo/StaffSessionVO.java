@@ -1,5 +1,6 @@
 package com.xbhy.workorder.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.Date;
 /**
  * 在线用户记录(StaffSession)实体类
  *
- * @author makejava
+ * @author
  * @since 2022-07-06 00:23:59
  */
 @Data
@@ -54,10 +55,12 @@ public class StaffSessionVO implements Serializable {
     /**
      * session创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTimestamp;
     /**
      * session最后访问时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastAccessTime;
     /**
      * 超时时间，单位为分钟

@@ -1,7 +1,7 @@
 package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.xbhy.workorder.dao.OrderDictDao;
+import com.xbhy.workorder.mapper.OrderDictMapper;
 import com.xbhy.workorder.entity.OrderDict;
 import com.xbhy.workorder.service.OrderDictService;
 import com.xbhy.workorder.vo.OrderDictVO;
@@ -22,7 +22,7 @@ import java.util.List;
 @Service("orderDictService")
 public class OrderDictServiceImpl implements OrderDictService {
     @Resource
-    private OrderDictDao orderDictDao;
+    private OrderDictMapper orderDictMapper;
 
     /**
      * 通过ID查询单条数据
@@ -32,7 +32,7 @@ public class OrderDictServiceImpl implements OrderDictService {
      */
     @Override
     public OrderDictVO queryById(Long id) {
-        return BeanUtil.copyProperties(this.orderDictDao.queryById(id),OrderDictVO.class);
+        return BeanUtil.copyProperties(this.orderDictMapper.queryById(id),OrderDictVO.class);
     }
 
     /**
@@ -41,12 +41,12 @@ public class OrderDictServiceImpl implements OrderDictService {
      */
     @Override
     public List<OrderDictVO> loadOrderDict(){
-       return BeanUtil.copyToList(orderDictDao.loadOrderDict(),OrderDictVO.class);
+       return BeanUtil.copyToList(orderDictMapper.loadOrderDict(),OrderDictVO.class);
     }
 
     @Override
     public OrderDictVO loadOrderDictBySort(String sortTag) {
-        return orderDictDao.loadOrderDictBySort(sortTag);
+        return orderDictMapper.loadOrderDictBySort(sortTag);
     }
 
     /**
@@ -59,8 +59,8 @@ public class OrderDictServiceImpl implements OrderDictService {
     @Override
     public Page<OrderDictVO> queryByPage(OrderDictVO orderDictVO, PageRequest pageRequest) {
         OrderDict orderDict = BeanUtil.copyProperties(orderDictVO,OrderDict.class);
-        long total = this.orderDictDao.count(orderDict);
-        return new PageImpl<>(BeanUtil.copyToList(this.orderDictDao.queryAllByLimit(orderDict, pageRequest),OrderDictVO.class), pageRequest, total);
+        long total = this.orderDictMapper.count(orderDict);
+        return new PageImpl<>(BeanUtil.copyToList(this.orderDictMapper.queryAllByLimit(orderDict, pageRequest),OrderDictVO.class), pageRequest, total);
     }
 
     /**
@@ -71,7 +71,7 @@ public class OrderDictServiceImpl implements OrderDictService {
      */
     @Override
     public OrderDictVO insert(OrderDictVO orderDictVO) {
-        this.orderDictDao.insert(BeanUtil.copyProperties(orderDictVO,OrderDict.class));
+        this.orderDictMapper.insert(BeanUtil.copyProperties(orderDictVO,OrderDict.class));
         return orderDictVO;
     }
 
@@ -83,7 +83,7 @@ public class OrderDictServiceImpl implements OrderDictService {
      */
     @Override
     public OrderDictVO update(OrderDictVO orderDictVO) {
-        this.orderDictDao.update(BeanUtil.copyProperties(orderDictVO,OrderDict.class));
+        this.orderDictMapper.update(BeanUtil.copyProperties(orderDictVO,OrderDict.class));
         return this.queryById(orderDictVO.getId());
     }
 
@@ -95,6 +95,6 @@ public class OrderDictServiceImpl implements OrderDictService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return this.orderDictDao.deleteById(id) > 0;
+        return this.orderDictMapper.deleteById(id) > 0;
     }
 }

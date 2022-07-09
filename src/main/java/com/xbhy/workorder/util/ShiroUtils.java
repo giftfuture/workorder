@@ -1,7 +1,7 @@
 package com.xbhy.workorder.util;
 
 
-import com.xbhy.workorder.shiro.realm.StaffRealm;
+import com.xbhy.workorder.shiro.realm.StaffAuthRealm;
 import com.xbhy.workorder.vo.StaffVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -56,7 +56,7 @@ public class ShiroUtils
 
     public static void clearCachedAuthorizationInfo() {
         RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
-        StaffRealm realm = (StaffRealm) rsm.getRealms().iterator().next();
+        StaffAuthRealm realm = (StaffAuthRealm) rsm.getRealms().iterator().next();
         realm.clearCachedAuthorizationInfo();
     }
     public static Long getStaffId()

@@ -2,9 +2,8 @@ package com.xbhy.workorder.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xbhy.workorder.entity.OrderTab;
-import com.xbhy.workorder.dao.OrderTabDao;
+import com.xbhy.workorder.mapper.OrderTabMapper;
 import com.xbhy.workorder.service.OrderTabService;
-import com.xbhy.workorder.vo.OrderSortVO;
 import com.xbhy.workorder.vo.OrderTabVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -29,7 +28,7 @@ import java.util.List;
 @Service("orderTabService")
 public class OrderTabServiceImpl implements OrderTabService {
     @Resource
-    private OrderTabDao orderTabDao;
+    private OrderTabMapper orderTabMapper;
 
     /**
      * 通过ID查询单条数据
@@ -39,7 +38,7 @@ public class OrderTabServiceImpl implements OrderTabService {
      */
     @Override
     public OrderTabVO queryById(Long id) {
-        return BeanUtil.copyProperties(this.orderTabDao.queryById(id),OrderTabVO.class);
+        return BeanUtil.copyProperties(this.orderTabMapper.queryById(id),OrderTabVO.class);
     }
 
     /**
@@ -48,7 +47,7 @@ public class OrderTabServiceImpl implements OrderTabService {
      */
     @Override
     public List<OrderTabVO> fetchAll() {
-        return BeanUtil.copyToList(orderTabDao.fetchAll(),OrderTabVO.class);
+        return BeanUtil.copyToList(orderTabMapper.fetchAll(),OrderTabVO.class);
     }
 
     /**
@@ -61,8 +60,8 @@ public class OrderTabServiceImpl implements OrderTabService {
     @Override
     public Page<OrderTabVO> queryByPage(OrderTabVO orderTabVO, PageRequest pageRequest) {
         OrderTab orderTab = BeanUtil.copyProperties(orderTabVO,OrderTab.class);
-        long total = this.orderTabDao.count(orderTab);
-        return new PageImpl<>(BeanUtil.copyToList(this.orderTabDao.queryAllByLimit(orderTab, pageRequest),OrderTabVO.class), pageRequest, total);
+        long total = this.orderTabMapper.count(orderTab);
+        return new PageImpl<>(BeanUtil.copyToList(this.orderTabMapper.queryAllByLimit(orderTab, pageRequest),OrderTabVO.class), pageRequest, total);
     }
 
     /**
@@ -73,7 +72,7 @@ public class OrderTabServiceImpl implements OrderTabService {
      */
     @Override
     public OrderTabVO insert(OrderTabVO orderTabVO) {
-        this.orderTabDao.insert(BeanUtil.copyProperties(orderTabVO,OrderTab.class));
+        this.orderTabMapper.insert(BeanUtil.copyProperties(orderTabVO,OrderTab.class));
         return orderTabVO;
     }
 
@@ -85,7 +84,7 @@ public class OrderTabServiceImpl implements OrderTabService {
      */
     @Override
     public OrderTabVO update(OrderTabVO orderTabVO) {
-        this.orderTabDao.update(BeanUtil.copyProperties(orderTabVO,OrderTab.class));
+        this.orderTabMapper.update(BeanUtil.copyProperties(orderTabVO,OrderTab.class));
         return this.queryById(orderTabVO.getId());
     }
 
@@ -97,6 +96,6 @@ public class OrderTabServiceImpl implements OrderTabService {
      */
     @Override
     public boolean deleteById(Long id) {
-        return this.orderTabDao.deleteById(id) > 0;
+        return this.orderTabMapper.deleteById(id) > 0;
     }
 }

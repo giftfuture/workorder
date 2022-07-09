@@ -1,6 +1,7 @@
 package com.xbhy.workorder.shiro.web.session;
 
-import com.xbhy.workorder.component.Threads;
+import com.xbhy.workorder.schedule.Threads;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionValidationScheduler;
 import org.apache.shiro.session.mgt.ValidatingSessionManager;
@@ -19,10 +20,10 @@ import java.util.concurrent.TimeUnit;
  * 
  * @author ycp
  */
+@Slf4j
 @Component
 public class SpringSessionValidationScheduler implements SessionValidationScheduler
 {
-    private static final Logger log = LoggerFactory.getLogger(SpringSessionValidationScheduler.class);
 
     public static final long DEFAULT_SESSION_VALIDATION_INTERVAL = DefaultSessionManager.DEFAULT_SESSION_VALIDATION_INTERVAL;
 
